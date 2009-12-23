@@ -114,6 +114,13 @@
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>atlassian</id>
+            <url>https://maven.atlassian.com/content/repositories/public</url>
+        </repository>
+    </repositories>
+
     <developers>
         <developer>
             <id>godin</id>
