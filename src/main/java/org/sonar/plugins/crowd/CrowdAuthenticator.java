@@ -1,4 +1,6 @@
-/*
+/**
+ * Copyright (C) 2009 Evgeny Mandrikov
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,8 +24,6 @@ import com.atlassian.crowd.integration.exception.InvalidAuthorizationTokenExcept
 import com.atlassian.crowd.integration.service.AuthenticationManager;
 import com.atlassian.crowd.integration.service.cache.CachingManagerFactory;
 import com.atlassian.crowd.integration.service.soap.client.ClientProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonar.api.security.LoginPasswordAuthenticator;
 
 import java.rmi.RemoteException;
@@ -32,12 +32,26 @@ import java.rmi.RemoteException;
  * @author Evgeny Mandrikov
  */
 public class CrowdAuthenticator implements LoginPasswordAuthenticator {
+    private final CrowdConfiguration configuration;
+
+    /**
+     * Creates new instance of CrowdAuthenticator with specified configuration.
+     *
+     * @param configuration Crowd configuration
+     */
+    public CrowdAuthenticator(CrowdConfiguration configuration) {
+        this.configuration = configuration;
+    }
+
     public void init() {
     }
 
     public boolean authenticate(String login, String password) {
         try {
             AuthenticationManager authenticationManager = CachingManagerFactory.getAuthenticationManagerInstance();
+
+            ClientProperties clientProperties = authenticationManager.getSecurityServerClient().getClientProperties();
+            clientProperties.updateProperties(configuration.getClientProperties());
 
             UserAuthenticationContext authenticationContext = new UserAuthenticationContext();
             authenticationContext.setName(login);
@@ -46,20 +60,16 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
             authenticationManager.authenticate(authenticationContext);
             return true;
         } catch (InvalidAuthenticationException e) {
-            getLog().warn("Could not authenticate " + login + ". The username or password were incorrect.");
+            CrowdHelper.LOG.error("Could not authenticate " + login + ". The username or password were incorrect.", e);
         } catch (InactiveAccountException e) {
-            getLog().warn("Could not authenticate " + login + ". The account is inactive and the user is not allowed to login.");
+            CrowdHelper.LOG.error("Could not authenticate " + login + ". The account is inactive and the user is not allowed to login.", e);
         } catch (InvalidAuthorizationTokenException e) {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         } catch (ApplicationAccessDeniedException e) {
-            getLog().warn("Could not authenticate " + login + ". The user does not have access to authenticate with the Crowd application.");
+            CrowdHelper.LOG.error("Could not authenticate " + login + ". The user does not have access to authenticate with the Crowd application.", e);
         }
         return false;
-    }
-
-    private Logger getLog() {
-        return LoggerFactory.getLogger("org.sonar.plugins.crowd");
     }
 }

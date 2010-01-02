@@ -1,4 +1,6 @@
-/*
+/**
+ * Copyright (C) 2009 Evgeny Mandrikov
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -39,6 +41,7 @@ public class CrowdPlugin implements Plugin {
     public List<Class<? extends Extension>> getExtensions() {
         ArrayList<Class<? extends Extension>> extensions = new ArrayList<Class<? extends Extension>>();
         extensions.add(CrowdAuthenticator.class);
+        extensions.add(CrowdConfiguration.class);
         return extensions;
     }
 }

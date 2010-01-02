@@ -11,6 +11,8 @@
     <version>0.1-SNAPSHOT</version>
     <name>Sonar Crowd Plugin</name>
 
+    <inceptionYear>2009</inceptionYear>
+
     <properties>
         <sonar.version>1.12</sonar.version>
         <jdk.min.version>1.5</jdk.min.version>
@@ -62,11 +64,22 @@
                 <artifactId>maven-license-plugin</artifactId>
                 <version>1.5.0</version>
                 <configuration>
-                    <header>${basedir}/header.txt</header>
+                    <header>${basedir}/src/license-header.txt</header>
                     <includes>
                         <include>src/main/java/**</include>
                     </includes>
+                    <properties>
+                        <year>${project.inceptionYear}</year>
+                        <name>Evgeny Mandrikov</name>
+                    </properties>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
