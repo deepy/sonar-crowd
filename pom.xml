@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.codehaus.sonar-plugins</groupId>
@@ -8,7 +7,7 @@
     </parent>
 
     <artifactId>sonar-crowd-plugin</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <name>Sonar Crowd Plugin</name>
 
     <inceptionYear>2009</inceptionYear>
@@ -149,9 +148,9 @@
     </developers>
 
     <scm>
-        <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/trunk/crowd</connection>
-        <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/trunk/crowd</developerConnection>
-        <url>http://svn.sonar-plugins.codehaus.org</url>
+        <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/tags/sonar-crowd-plugin-0.1</connection>
+        <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/tags/sonar-crowd-plugin-0.1</developerConnection>
+        <url>scm:svn:https://svn.codehaus.org/sonar-plugins/tags/sonar-crowd-plugin-0.1</url>
     </scm>
 
     <issueManagement>
