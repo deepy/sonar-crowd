@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.codehaus.sonar-plugins</groupId>
         <artifactId>parent</artifactId>
-        <version>3</version>
+        <version>4</version>
     </parent>
 
     <artifactId>sonar-crowd-plugin</artifactId>
@@ -12,6 +12,10 @@
     <name>Sonar Crowd Plugin</name>
 
     <inceptionYear>2009</inceptionYear>
+    <organization>
+        <name>Evgeny Mandrikov</name>
+        <url>http://godin.net.ru/</url>
+    </organization>
 
     <properties>
         <sonar.version>1.12</sonar.version>
@@ -57,29 +61,6 @@
                     <target>${jdk.min.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
-                <version>1.5.0</version>
-                <configuration>
-                    <header>${basedir}/src/license-header.txt</header>
-                    <includes>
-                        <include>src/main/java/**</include>
-                    </includes>
-                    <properties>
-                        <year>${project.inceptionYear}</year>
-                        <name>Evgeny Mandrikov</name>
-                    </properties>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -191,4 +172,3 @@
         </license>
     </licenses>
 </project>
-        
