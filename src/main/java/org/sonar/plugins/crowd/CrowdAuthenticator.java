@@ -33,44 +33,44 @@ import java.rmi.RemoteException;
  * @author Evgeny Mandrikov
  */
 public class CrowdAuthenticator implements LoginPasswordAuthenticator {
-    private final CrowdConfiguration configuration;
+  private final CrowdConfiguration configuration;
 
-    /**
-     * Creates new instance of CrowdAuthenticator with specified configuration.
-     *
-     * @param configuration Crowd configuration
-     */
-    public CrowdAuthenticator(CrowdConfiguration configuration) {
-        this.configuration = configuration;
+  /**
+   * Creates new instance of CrowdAuthenticator with specified configuration.
+   *
+   * @param configuration Crowd configuration
+   */
+  public CrowdAuthenticator(CrowdConfiguration configuration) {
+    this.configuration = configuration;
+  }
+
+  public void init() {
+  }
+
+  public boolean authenticate(String login, String password) {
+    try {
+      AuthenticationManager authenticationManager = CachingManagerFactory.getAuthenticationManagerInstance();
+
+      ClientProperties clientProperties = authenticationManager.getSecurityServerClient().getClientProperties();
+      clientProperties.updateProperties(configuration.getClientProperties());
+
+      UserAuthenticationContext authenticationContext = new UserAuthenticationContext();
+      authenticationContext.setName(login);
+      authenticationContext.setCredential(new PasswordCredential(password));
+
+      authenticationManager.authenticate(authenticationContext);
+      return true;
+    } catch (InvalidAuthenticationException e) {
+      CrowdHelper.LOG.error("Could not authenticate " + login + ". The username or password were incorrect.", e);
+    } catch (InactiveAccountException e) {
+      CrowdHelper.LOG.error("Could not authenticate " + login + ". The account is inactive and the user is not allowed to login.", e);
+    } catch (InvalidAuthorizationTokenException e) {
+      throw new RuntimeException(e);
+    } catch (RemoteException e) {
+      throw new RuntimeException(e);
+    } catch (ApplicationAccessDeniedException e) {
+      CrowdHelper.LOG.error("Could not authenticate " + login + ". The user does not have access to authenticate with the Crowd application.", e);
     }
-
-    public void init() {
-    }
-
-    public boolean authenticate(String login, String password) {
-        try {
-            AuthenticationManager authenticationManager = CachingManagerFactory.getAuthenticationManagerInstance();
-
-            ClientProperties clientProperties = authenticationManager.getSecurityServerClient().getClientProperties();
-            clientProperties.updateProperties(configuration.getClientProperties());
-
-            UserAuthenticationContext authenticationContext = new UserAuthenticationContext();
-            authenticationContext.setName(login);
-            authenticationContext.setCredential(new PasswordCredential(password));
-
-            authenticationManager.authenticate(authenticationContext);
-            return true;
-        } catch (InvalidAuthenticationException e) {
-            CrowdHelper.LOG.error("Could not authenticate " + login + ". The username or password were incorrect.", e);
-        } catch (InactiveAccountException e) {
-            CrowdHelper.LOG.error("Could not authenticate " + login + ". The account is inactive and the user is not allowed to login.", e);
-        } catch (InvalidAuthorizationTokenException e) {
-            throw new RuntimeException(e);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (ApplicationAccessDeniedException e) {
-            CrowdHelper.LOG.error("Could not authenticate " + login + ". The user does not have access to authenticate with the Crowd application.", e);
-        }
-        return false;
-    }
+    return false;
+  }
 }

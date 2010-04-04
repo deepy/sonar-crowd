@@ -27,22 +27,22 @@ import java.util.List;
  */
 @SuppressWarnings({"UnusedDeclaration"})
 public class CrowdPlugin implements Plugin {
-    public String getKey() {
-        return "crowd";
-    }
+  public String getKey() {
+    return "crowd";
+  }
 
-    public String getName() {
-        return "Crowd";
-    }
+  public String getName() {
+    return "Crowd";
+  }
 
-    public String getDescription() {
-        return "Plugs authentication mechanism to a Crowd to delegate passwords management.";
-    }
+  public String getDescription() {
+    return "Plugs authentication mechanism to a Crowd to delegate passwords management.";
+  }
 
-    public List<Class<? extends Extension>> getExtensions() {
-        ArrayList<Class<? extends Extension>> extensions = new ArrayList<Class<? extends Extension>>();
-        extensions.add(CrowdAuthenticator.class);
-        extensions.add(CrowdConfiguration.class);
-        return extensions;
-    }
+  public List<Class<? extends Extension>> getExtensions() {
+    ArrayList<Class<? extends Extension>> extensions = new ArrayList<Class<? extends Extension>>();
+    extensions.add(CrowdAuthenticator.class);
+    extensions.add(CrowdConfiguration.class);
+    return extensions;
+  }
 }

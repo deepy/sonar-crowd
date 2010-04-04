@@ -23,11 +23,11 @@ import org.slf4j.LoggerFactory;
  * @author Evgeny Mandrikov
  */
 public final class CrowdHelper {
-    public static final Logger LOG = LoggerFactory.getLogger("org.sonar.plugins.crowd");
+  public static final Logger LOG = LoggerFactory.getLogger("org.sonar.plugins.crowd");
 
-    /**
-     * Hide utility-class constructor.
-     */
-    private CrowdHelper() {
-    }
+  /**
+   * Hide utility-class constructor.
+   */
+  private CrowdHelper() {
+  }
 }
