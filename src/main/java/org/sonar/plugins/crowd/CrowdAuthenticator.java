@@ -26,6 +26,7 @@ import com.atlassian.crowd.integration.service.AuthenticationManager;
 import com.atlassian.crowd.integration.service.cache.CachingManagerFactory;
 import com.atlassian.crowd.integration.service.soap.client.ClientProperties;
 import org.sonar.api.security.LoginPasswordAuthenticator;
+import org.sonar.api.utils.SonarException;
 
 import java.rmi.RemoteException;
 
@@ -65,11 +66,12 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
     } catch (InactiveAccountException e) {
       CrowdHelper.LOG.error("Could not authenticate " + login + ". The account is inactive and the user is not allowed to login.", e);
     } catch (InvalidAuthorizationTokenException e) {
-      throw new RuntimeException(e);
+      throw new SonarException(e);
     } catch (RemoteException e) {
-      throw new RuntimeException(e);
+      throw new SonarException(e);
     } catch (ApplicationAccessDeniedException e) {
-      CrowdHelper.LOG.error("Could not authenticate " + login + ". The user does not have access to authenticate with the Crowd application.", e);
+      CrowdHelper.LOG.error("Could not authenticate " + login + "." +
+          " The user does not have access to authenticate with the Crowd application.", e);
     }
     return false;
   }
