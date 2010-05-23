@@ -11,6 +11,7 @@
   <artifactId>sonar-crowd-plugin</artifactId>
   <version>0.2-SNAPSHOT</version>
   <name>Sonar Crowd Plugin</name>
+  <description>Enables the delegation of Sonar authentication to Atlassian Crowd.</description>
 
   <inceptionYear>2009</inceptionYear>
   <organization>
