@@ -22,8 +22,10 @@
   </organization>
 
   <properties>
-    <sonar.version>1.12</sonar.version>
+    <sonar.version>2.2RC2</sonar.version>
     <sonar.pluginClass>org.sonar.plugins.crowd.CrowdPlugin</sonar.pluginClass>
+
+    <sonarVersion>2.2RC2</sonarVersion>
   </properties>
 
   <dependencies>
@@ -49,6 +51,14 @@
           <artifactId>log4j</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+
+    <!-- unit tests -->
+    <dependency>
+      <groupId>org.codehaus.sonar</groupId>
+      <artifactId>sonar-testing-harness</artifactId>
+      <version>${sonar.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
