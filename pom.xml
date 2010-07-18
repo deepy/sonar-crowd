@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.codehaus.sonar-plugins</groupId>
     <artifactId>parent</artifactId>
-    <version>6-SNAPSHOT</version>
+    <version>6</version>
     <relativePath>../parent</relativePath>
   </parent>
 
@@ -15,18 +15,44 @@
   <name>Sonar Crowd Plugin</name>
   <description>Enables the delegation of Sonar authentication to Atlassian Crowd.</description>
   <url>http://docs.codehaus.org/display/SONAR/Crowd+Plugin</url>
-
   <inceptionYear>2009</inceptionYear>
   <organization>
     <name>Evgeny Mandrikov</name>
     <url>http://godin.net.ru/</url>
   </organization>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>godin</id>
+      <name>Evgeny Mandrikov</name>
+      <timezone>+3</timezone>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/trunk/crowd</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/trunk/crowd</developerConnection>
+    <url>http://svn.sonar-plugins.codehaus.org</url>
+  </scm>
+  <issueManagement>
+    <system>JIRA</system>
+    <url>http://jira.codehaus.org/browse/SONARPLUGINS/component/14294</url>
+  </issueManagement>
+  <ciManagement>
+    <system>Bamboo</system>
+    <url>http://ci.codehaus.org/browse/SONAR-CROWD</url>
+  </ciManagement>
 
   <properties>
-    <sonar.version>2.2RC2</sonar.version>
+    <sonar.version>2.2</sonar.version>
     <sonar.pluginClass>org.sonar.plugins.crowd.CrowdPlugin</sonar.pluginClass>
-
-    <sonarVersion>2.2RC2</sonarVersion>
   </properties>
 
   <dependencies>
@@ -69,36 +95,4 @@
       <url>https://maven.atlassian.com/content/repositories/public</url>
     </repository>
   </repositories>
-
-  <developers>
-    <developer>
-      <id>godin</id>
-      <name>Evgeny Mandrikov</name>
-      <timezone>+3</timezone>
-    </developer>
-  </developers>
-
-  <scm>
-    <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/trunk/crowd</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/trunk/crowd</developerConnection>
-    <url>http://svn.sonar-plugins.codehaus.org</url>
-  </scm>
-
-  <issueManagement>
-    <system>JIRA</system>
-    <url>http://jira.codehaus.org/browse/SONARPLUGINS/component/14294</url>
-  </issueManagement>
-
-  <ciManagement>
-    <system>Bamboo</system>
-    <url>http://ci.codehaus.org/browse/SONAR-CROWD</url>
-  </ciManagement>
-
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
 </project>
