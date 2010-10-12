@@ -51,7 +51,7 @@
   </ciManagement>
 
   <properties>
-    <sonar.version>2.2</sonar.version>
+    <sonar.version>2.3</sonar.version>
     <sonar.pluginClass>org.sonar.plugins.crowd.CrowdPlugin</sonar.pluginClass>
   </properties>
 

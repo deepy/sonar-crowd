@@ -25,7 +25,6 @@ import java.util.List;
 /**
  * @author Evgeny Mandrikov
  */
-@SuppressWarnings({"UnusedDeclaration"})
 public class CrowdPlugin implements Plugin {
   public String getKey() {
     return "crowd";

@@ -16,18 +16,18 @@
 
 package org.sonar.plugins.crowd;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author Evgeny Mandrikov
  */
 public class CrowdPluginTest {
-  private CrowdPlugin plugin; 
+  private CrowdPlugin plugin;
 
   @Before
   public void setUp() throws Exception {
@@ -36,9 +36,9 @@ public class CrowdPluginTest {
 
   @Test
   public void test() {
-    assertNotNull(plugin.getKey());
-    assertNotNull(plugin.getName());
-    assertNotNull(plugin.getDescription());
-    assertEquals(plugin.getExtensions().size(), 2);
+    assertThat(plugin.getKey(), notNullValue());
+    assertThat(plugin.getName(), notNullValue());
+    assertThat(plugin.getDescription(), notNullValue());
+    assertThat(plugin.getExtensions().size(), is(2));
   }
 }
