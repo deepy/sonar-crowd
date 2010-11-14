@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>sonar-crowd-plugin</artifactId>
-  <version>0.3-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Sonar Crowd Plugin</name>
@@ -36,9 +36,9 @@
   </developers>
 
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/trunk/crowd</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/trunk/crowd</developerConnection>
-    <url>http://svn.sonar-plugins.codehaus.org</url>
+    <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/tags/sonar-crowd-plugin-1.0</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/tags/sonar-crowd-plugin-1.0</developerConnection>
+    <url>scm:svn:https://svn.codehaus.org/sonar-plugins/tags/sonar-crowd-plugin-1.0</url>
   </scm>
   <issueManagement>
     <system>JIRA</system>
