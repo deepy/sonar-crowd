@@ -24,7 +24,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -40,9 +39,6 @@ public class CrowdPluginTest {
 
   @Test
   public void test() {
-    assertThat(plugin.getKey(), notNullValue());
-    assertThat(plugin.getName(), notNullValue());
-    assertThat(plugin.getDescription(), notNullValue());
     assertThat(plugin.getExtensions().size(), is(2));
   }
 }

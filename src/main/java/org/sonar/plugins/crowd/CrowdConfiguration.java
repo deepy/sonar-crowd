@@ -20,8 +20,8 @@
 
 package org.sonar.plugins.crowd;
 
-import org.apache.commons.configuration.Configuration;
 import org.sonar.api.ServerExtension;
+import org.sonar.api.config.Settings;
 
 import java.util.Properties;
 
@@ -29,7 +29,7 @@ import java.util.Properties;
  * @author Evgeny Mandrikov
  */
 public class CrowdConfiguration implements ServerExtension {
-  private final Configuration configuration;
+  private final Settings settings;
   private Properties clientProperties;
 
   /**
@@ -37,8 +37,8 @@ public class CrowdConfiguration implements ServerExtension {
    *
    * @param configuration configuration
    */
-  public CrowdConfiguration(Configuration configuration) {
-    this.configuration = configuration;
+  public CrowdConfiguration(Settings settings) {
+    this.settings = settings;
   }
 
   /**
@@ -54,15 +54,15 @@ public class CrowdConfiguration implements ServerExtension {
   }
 
   private Properties newInstance() {
-    final String crowdUrl = configuration.getString("crowd.url", null);
-    final String applicationName = configuration.getString("crowd.application", "sonar");
-    final String applicationPassword = configuration.getString("crowd.password", null);
+    final String crowdUrl = settings.getString("crowd.url");
+    String applicationName = settings.getString("crowd.application");
+    final String applicationPassword = settings.getString("crowd.password");
 
     if (crowdUrl == null) {
       throw new IllegalArgumentException("Crowd URL is not set");
     }
     if (applicationName == null) {
-      throw new IllegalArgumentException("Crowd Application Name is not set");
+      applicationName = "sonar";
     }
     if (applicationPassword == null) {
       throw new IllegalArgumentException("Crowd Application Password is not set");

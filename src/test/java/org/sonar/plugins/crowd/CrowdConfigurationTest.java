@@ -20,26 +20,25 @@
 
 package org.sonar.plugins.crowd;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.sonar.api.config.Settings;
+
+import java.util.Properties;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
-import org.apache.commons.configuration.BaseConfiguration;
-import org.apache.commons.configuration.Configuration;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Properties;
-
 public class CrowdConfigurationTest {
 
-  private Configuration configuration;
+  private Settings settings;
   private CrowdConfiguration crowdConfiguration;
 
   @Before
   public void setUp() {
-    configuration = new BaseConfiguration();
-    crowdConfiguration = new CrowdConfiguration(configuration);
+    settings = new Settings();
+    crowdConfiguration = new CrowdConfiguration(settings);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -49,14 +48,14 @@ public class CrowdConfigurationTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void applicationPasswordMissing() {
-    configuration.setProperty("crowd.url", "http://localhost:8095/crowd");
+    settings.setProperty("crowd.url", "http://localhost:8095/crowd");
     crowdConfiguration.getClientProperties();
   }
 
   @Test
   public void shouldCreateClientProperties() {
-    configuration.setProperty("crowd.url", "http://localhost:8095/crowd");
-    configuration.setProperty("crowd.password", "secure");
+    settings.setProperty("crowd.url", "http://localhost:8095/crowd");
+    settings.setProperty("crowd.password", "secure");
 
     Properties properties = crowdConfiguration.getClientProperties();
     assertThat("client properties should be cached", crowdConfiguration.getClientProperties(), sameInstance(properties));

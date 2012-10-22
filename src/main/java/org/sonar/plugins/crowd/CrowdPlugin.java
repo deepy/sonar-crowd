@@ -21,7 +21,7 @@
 package org.sonar.plugins.crowd;
 
 import org.sonar.api.Extension;
-import org.sonar.api.Plugin;
+import org.sonar.api.SonarPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,19 +29,7 @@ import java.util.List;
 /**
  * @author Evgeny Mandrikov
  */
-public class CrowdPlugin implements Plugin {
-  public String getKey() {
-    return "crowd";
-  }
-
-  public String getName() {
-    return "Crowd";
-  }
-
-  public String getDescription() {
-    return "Plugs authentication mechanism to a Crowd to delegate passwords management.";
-  }
-
+public class CrowdPlugin extends SonarPlugin {
   public List<Class<? extends Extension>> getExtensions() {
     ArrayList<Class<? extends Extension>> extensions = new ArrayList<Class<? extends Extension>>();
     extensions.add(CrowdAuthenticator.class);
