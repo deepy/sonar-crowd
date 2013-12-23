@@ -36,9 +36,9 @@
   </developers>
 
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/trunk/crowd</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/trunk/crowd</developerConnection>
-    <url>http://svn.sonar-plugins.codehaus.org</url>
+    <connection>scm:git:https://github.com/SonarCommunity/sonar-crowd.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-crowd.git</developerConnection>
+    <url>https://github.com/SonarCommunity/sonar-crowd</url>
   </scm>
   <issueManagement>
     <system>JIRA</system>
