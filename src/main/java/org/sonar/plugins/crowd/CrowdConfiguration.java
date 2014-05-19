@@ -29,6 +29,11 @@ import java.util.Properties;
  * @author Evgeny Mandrikov
  */
 public class CrowdConfiguration implements ServerExtension {
+
+  static final String KEY_CROWD_URL = "crowd.url";
+  static final String KEY_CROWD_APP_NAME = "crowd.application";
+  static final String KEY_CROWD_APP_PASSWORD = "crowd.password";
+
   private final Settings settings;
   private Properties clientProperties;
 
@@ -54,9 +59,9 @@ public class CrowdConfiguration implements ServerExtension {
   }
 
   private Properties newInstance() {
-    final String crowdUrl = settings.getString("crowd.url");
-    String applicationName = settings.getString("crowd.application");
-    final String applicationPassword = settings.getString("crowd.password");
+    final String crowdUrl = settings.getString(KEY_CROWD_URL);
+    String applicationName = settings.getString(KEY_CROWD_APP_NAME);
+    final String applicationPassword = settings.getString(KEY_CROWD_APP_PASSWORD);
 
     if (crowdUrl == null) {
       throw new IllegalArgumentException("Crowd URL is not set");
