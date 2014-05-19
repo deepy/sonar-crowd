@@ -29,6 +29,9 @@ import com.atlassian.crowd.exception.UserNotFoundException;
 import com.atlassian.crowd.integration.rest.service.factory.RestCrowdClientFactory;
 import com.atlassian.crowd.service.client.CrowdClient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.sonar.api.security.LoginPasswordAuthenticator;
 
 import java.util.Properties;
@@ -37,6 +40,8 @@ import java.util.Properties;
  * @author Evgeny Mandrikov
  */
 public class CrowdAuthenticator implements LoginPasswordAuthenticator {
+
+  private static final Logger LOG = LoggerFactory.getLogger(CrowdAuthenticator.class);
 
   private final CrowdClient client;
 
@@ -70,22 +75,22 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
       client.authenticateUser(login, password);
       return true;
     } catch (UserNotFoundException e) {
-      CrowdHelper.LOG.debug("User {} not found", login);
+      LOG.debug("User {} not found", login);
       return false;
     } catch (InactiveAccountException e) {
-      CrowdHelper.LOG.debug("User {} is not active", login);
+      LOG.debug("User {} is not active", login);
       return false;
     } catch (ExpiredCredentialException e) {
-      CrowdHelper.LOG.debug("Credentials of user {} have expired", login);
+      LOG.debug("Credentials of user {} have expired", login);
       return false;
     } catch (ApplicationPermissionException e) {
-      CrowdHelper.LOG.error("Access to crowd has been denied for this application", e);
+      LOG.error("Access to crowd has been denied for this application", e);
       return false;
     } catch (InvalidAuthenticationException e) {
-      CrowdHelper.LOG.error("Invalid crowd credentials for this application", e);
+      LOG.error("Invalid crowd credentials for this application", e);
       return false;
     } catch (OperationFailedException e) {
-      CrowdHelper.LOG.error("Unable to authenticate user " + login, e);
+      LOG.error("Unable to authenticate user " + login, e);
       return false;
     }
   }
