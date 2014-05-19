@@ -20,6 +20,9 @@
 
 package org.sonar.plugins.crowd;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.sonar.api.ServerExtension;
 import org.sonar.api.config.Settings;
 
@@ -29,6 +32,8 @@ import java.util.Properties;
  * @author Evgeny Mandrikov
  */
 public class CrowdConfiguration implements ServerExtension {
+
+  private static final Logger LOG = LoggerFactory.getLogger(CrowdConfiguration.class);
 
   static final String KEY_CROWD_URL = "crowd.url";
   static final String KEY_CROWD_APP_NAME = "crowd.application";
@@ -73,15 +78,17 @@ public class CrowdConfiguration implements ServerExtension {
       throw new IllegalArgumentException("Crowd Application Password is not set");
     }
 
-    if (CrowdHelper.LOG.isInfoEnabled()) {
-      CrowdHelper.LOG.info("URL: " + crowdUrl);
-      CrowdHelper.LOG.info("Application Name: " + applicationName);
+    if (LOG.isInfoEnabled()) {
+      LOG.info("Crowd URL: " + crowdUrl);
+      LOG.info("Crowd application name: " + applicationName);
     }
 
     Properties properties = new Properties();
     properties.setProperty("crowd.server.url", crowdUrl);
     properties.setProperty("application.name", applicationName);
     properties.setProperty("application.password", applicationPassword);
+
+    // might be a good idea to make this configurable
     properties.setProperty("session.validationinterval", "5");
     return properties;
   }
