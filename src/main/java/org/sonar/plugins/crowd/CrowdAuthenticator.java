@@ -20,25 +20,25 @@
 
 package org.sonar.plugins.crowd;
 
-import com.atlassian.crowd.integration.authentication.PasswordCredential;
-import com.atlassian.crowd.integration.authentication.UserAuthenticationContext;
-import com.atlassian.crowd.integration.exception.ApplicationAccessDeniedException;
-import com.atlassian.crowd.integration.exception.InactiveAccountException;
-import com.atlassian.crowd.integration.exception.InvalidAuthenticationException;
-import com.atlassian.crowd.integration.exception.InvalidAuthorizationTokenException;
-import com.atlassian.crowd.integration.service.AuthenticationManager;
-import com.atlassian.crowd.integration.service.cache.CachingManagerFactory;
-import com.atlassian.crowd.integration.service.soap.client.ClientProperties;
-import org.sonar.api.security.LoginPasswordAuthenticator;
-import org.sonar.api.utils.SonarException;
+import com.atlassian.crowd.exception.ApplicationPermissionException;
+import com.atlassian.crowd.exception.ExpiredCredentialException;
+import com.atlassian.crowd.exception.InactiveAccountException;
+import com.atlassian.crowd.exception.InvalidAuthenticationException;
+import com.atlassian.crowd.exception.OperationFailedException;
+import com.atlassian.crowd.exception.UserNotFoundException;
+import com.atlassian.crowd.integration.rest.service.factory.RestCrowdClientFactory;
+import com.atlassian.crowd.service.client.CrowdClient;
 
-import java.rmi.RemoteException;
+import org.sonar.api.security.LoginPasswordAuthenticator;
+
+import java.util.Properties;
 
 /**
  * @author Evgeny Mandrikov
  */
 public class CrowdAuthenticator implements LoginPasswordAuthenticator {
-  private final CrowdConfiguration configuration;
+
+  private final CrowdClient client;
 
   /**
    * Creates new instance of CrowdAuthenticator with specified configuration.
@@ -46,37 +46,47 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
    * @param configuration Crowd configuration
    */
   public CrowdAuthenticator(CrowdConfiguration configuration) {
-    this.configuration = configuration;
+    this.client = createCrowdClient(configuration);
   }
 
+  private CrowdClient createCrowdClient(CrowdConfiguration configuration) {
+    Properties props = configuration.getClientProperties();
+
+    String crowdUrl = props.getProperty(CrowdConfiguration.KEY_CROWD_URL);
+    String applicationName = props.getProperty(CrowdConfiguration.KEY_CROWD_APP_NAME);
+    String applicationPassword = props.getProperty(CrowdConfiguration.KEY_CROWD_APP_PASSWORD);
+
+    return new RestCrowdClientFactory().newInstance(crowdUrl, applicationName, applicationPassword);
+  }
+
+  @Override
   public void init() {
+    // noop
   }
 
+  @Override
   public boolean authenticate(String login, String password) {
     try {
-      AuthenticationManager authenticationManager = CachingManagerFactory.getAuthenticationManagerInstance();
-
-      ClientProperties clientProperties = authenticationManager.getSecurityServerClient().getClientProperties();
-      clientProperties.updateProperties(configuration.getClientProperties());
-
-      UserAuthenticationContext authenticationContext = new UserAuthenticationContext();
-      authenticationContext.setName(login);
-      authenticationContext.setCredential(new PasswordCredential(password));
-
-      authenticationManager.authenticate(authenticationContext);
+      client.authenticateUser(login, password);
       return true;
-    } catch (InvalidAuthenticationException e) {
-      CrowdHelper.LOG.error("Could not authenticate " + login + ". The username or password were incorrect.", e);
+    } catch (UserNotFoundException e) {
+      CrowdHelper.LOG.debug("User {} not found", login);
+      return false;
     } catch (InactiveAccountException e) {
-      CrowdHelper.LOG.error("Could not authenticate " + login + ". The account is inactive and the user is not allowed to login.", e);
-    } catch (InvalidAuthorizationTokenException e) {
-      throw new SonarException(e);
-    } catch (RemoteException e) {
-      throw new SonarException(e);
-    } catch (ApplicationAccessDeniedException e) {
-      CrowdHelper.LOG.error("Could not authenticate " + login + "." +
-          " The user does not have access to authenticate with the Crowd application.", e);
+      CrowdHelper.LOG.debug("User {} is not active", login);
+      return false;
+    } catch (ExpiredCredentialException e) {
+      CrowdHelper.LOG.debug("Credentials of user {} have expired", login);
+      return false;
+    } catch (ApplicationPermissionException e) {
+      CrowdHelper.LOG.error("Access to crowd has been denied for this application", e);
+      return false;
+    } catch (InvalidAuthenticationException e) {
+      CrowdHelper.LOG.error("Invalid crowd credentials for this application", e);
+      return false;
+    } catch (OperationFailedException e) {
+      CrowdHelper.LOG.error("Unable to authenticate user " + login, e);
+      return false;
     }
-    return false;
   }
 }
