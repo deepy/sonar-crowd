@@ -20,20 +20,26 @@
 
 package org.sonar.plugins.crowd;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
+
 import org.sonar.api.Extension;
 import org.sonar.api.SonarPlugin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Evgeny Mandrikov
  */
 public class CrowdPlugin extends SonarPlugin {
+
+  @Override
   public List<Class<? extends Extension>> getExtensions() {
-    ArrayList<Class<? extends Extension>> extensions = new ArrayList<Class<? extends Extension>>();
-    extensions.add(CrowdAuthenticator.class);
-    extensions.add(CrowdConfiguration.class);
-    return extensions;
+    Builder<Class<? extends Extension>> builder = ImmutableList.builder();
+
+    builder.add(CrowdAuthenticator.class);
+    builder.add(CrowdConfiguration.class);
+
+    return builder.build();
   }
 }
