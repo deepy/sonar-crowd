@@ -37,7 +37,7 @@ public class CrowdPlugin extends SonarPlugin {
   public List<Class<? extends Extension>> getExtensions() {
     Builder<Class<? extends Extension>> builder = ImmutableList.builder();
 
-    builder.add(CrowdAuthenticator.class);
+    builder.add(CrowdRealm.class);
     builder.add(CrowdConfiguration.class);
 
     return builder.build();
