@@ -84,10 +84,11 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
       LOG.debug("Credentials of user {} have expired", login);
       return false;
     } catch (ApplicationPermissionException e) {
-      LOG.error("Access to crowd has been denied for this application", e);
+      LOG.error("The application is not permitted to perform the requested operation"
+          + " on the crowd server", e);
       return false;
     } catch (InvalidAuthenticationException e) {
-      LOG.error("Invalid crowd credentials for this application", e);
+      LOG.error("Application name and password are incorrect", e);
       return false;
     } catch (OperationFailedException e) {
       LOG.error("Unable to authenticate user " + login, e);
