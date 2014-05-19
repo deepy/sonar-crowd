@@ -26,15 +26,12 @@ import com.atlassian.crowd.exception.InactiveAccountException;
 import com.atlassian.crowd.exception.InvalidAuthenticationException;
 import com.atlassian.crowd.exception.OperationFailedException;
 import com.atlassian.crowd.exception.UserNotFoundException;
-import com.atlassian.crowd.integration.rest.service.factory.RestCrowdClientFactory;
 import com.atlassian.crowd.service.client.CrowdClient;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.sonar.api.security.LoginPasswordAuthenticator;
-
-import java.util.Properties;
 
 /**
  * @author Evgeny Mandrikov
@@ -45,23 +42,8 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
 
   private final CrowdClient client;
 
-  /**
-   * Creates new instance of CrowdAuthenticator with specified configuration.
-   *
-   * @param configuration Crowd configuration
-   */
-  public CrowdAuthenticator(CrowdConfiguration configuration) {
-    this.client = createCrowdClient(configuration);
-  }
-
-  private CrowdClient createCrowdClient(CrowdConfiguration configuration) {
-    Properties props = configuration.getClientProperties();
-
-    String crowdUrl = props.getProperty(CrowdConfiguration.KEY_CROWD_URL);
-    String applicationName = props.getProperty(CrowdConfiguration.KEY_CROWD_APP_NAME);
-    String applicationPassword = props.getProperty(CrowdConfiguration.KEY_CROWD_APP_PASSWORD);
-
-    return new RestCrowdClientFactory().newInstance(crowdUrl, applicationName, applicationPassword);
+  public CrowdAuthenticator(CrowdClient client) {
+    this.client = client;
   }
 
   @Override
