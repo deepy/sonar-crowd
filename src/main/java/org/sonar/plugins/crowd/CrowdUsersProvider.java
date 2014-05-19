@@ -62,8 +62,7 @@ public class CrowdUsersProvider extends ExternalUsersProvider {
       }
       return details;
     } catch (UserNotFoundException e) {
-      throw new SonarException("Unable to retrieve user details for user" + username
-          + " from crowd. The user does not exist.", e);
+      return null; // API contract for ExternalUsersProvider
     } catch (OperationFailedException e) {
       throw new SonarException("Unable to retrieve user details for user" + username
           + " from crowd.", e);
