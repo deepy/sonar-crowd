@@ -74,6 +74,7 @@ public class CrowdRealm extends SecurityRealm {
   public void init() {
     try {
       crowdClient.testConnection();
+      LOG.info("Crowd configuration is valid, connection test successful.");
     } catch (OperationFailedException e) {
       throw new SonarException("Unable to test connection to crowd", e);
     } catch (InvalidAuthenticationException e) {
