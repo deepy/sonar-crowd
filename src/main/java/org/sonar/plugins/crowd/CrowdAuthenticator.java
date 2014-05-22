@@ -70,7 +70,7 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
           + " on the crowd server", e);
       return false;
     } catch (InvalidAuthenticationException e) {
-      LOG.error("Application name and password are incorrect", e);
+      LOG.debug("Invalid credentials for user {}", login);
       return false;
     } catch (OperationFailedException e) {
       LOG.error("Unable to authenticate user " + login, e);
