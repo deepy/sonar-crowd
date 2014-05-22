@@ -59,9 +59,8 @@ public class CrowdRealm extends SecurityRealm {
     String applicationName = configuration.getCrowdApplicationName();
     String applicationPassword = configuration.getCrowdApplicationPassword();
 
-    LOG.info("Configured Crowd URL: <" + crowdUrl + ">");
-    LOG.info("Configured Crowd Application name: <" + applicationName + ">");
-    LOG.info("Configured Crowd Application password: <" + applicationPassword + ">");
+    LOG.info("Crowd URL: " + crowdUrl);
+    LOG.info("Crowd application name: " + applicationName);
 
     return new RestCrowdClientFactory().newInstance(crowdUrl, applicationName, applicationPassword);
   }
