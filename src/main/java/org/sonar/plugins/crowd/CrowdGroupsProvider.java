@@ -30,7 +30,6 @@ import com.atlassian.crowd.model.group.Group;
 import com.atlassian.crowd.service.client.CrowdClient;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableList.Builder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +38,7 @@ import org.sonar.api.security.ExternalGroupsProvider;
 import org.sonar.api.utils.SonarException;
 
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -62,53 +62,39 @@ public class CrowdGroupsProvider extends ExternalGroupsProvider {
     }
   };
 
-  private Collection<String> getDirectGroupsForUser(String username, int start, int pageSize)
-      throws UserNotFoundException, OperationFailedException, InvalidAuthenticationException,
-      ApplicationPermissionException {
-    return transform(crowdClient.getGroupsForUser(username, start, pageSize), GROUP_TO_STRING);
-  }
-
-  private Collection<String> getNestedGroupsForUser(String username, int start, int pageSize)
+  private Collection<String> getGroupsForUser(String username, int start, int pageSize)
       throws UserNotFoundException, OperationFailedException, InvalidAuthenticationException,
       ApplicationPermissionException {
     return transform(crowdClient.getGroupsForNestedUser(username, start, pageSize), GROUP_TO_STRING);
   }
 
-  private List<String> getGroupsForUser(String username, boolean nested)
+  private List<String> getGroupsForUser(String username)
       throws UserNotFoundException,
       OperationFailedException, InvalidAuthenticationException,
       ApplicationPermissionException {
 
-    Builder<String> groups = ImmutableList.builder();
+    Collection<String> groups = new LinkedHashSet<String>();
     boolean mightHaveMore = true;
     int groupIndex = 0;
     Collection<String> newGroups;
 
     while (mightHaveMore) {
-      if (nested) {
-        newGroups = getDirectGroupsForUser(username, groupIndex, PAGING_SIZE);
-      } else {
-        newGroups = getNestedGroupsForUser(username, groupIndex, PAGING_SIZE);
-      }
+      newGroups = getGroupsForUser(username, groupIndex, PAGING_SIZE);
       if (newGroups.size() < PAGING_SIZE) {
         mightHaveMore = false;
       }
       groups.addAll(newGroups);
       groupIndex += newGroups.size();
     }
-    return groups.build();
+    return ImmutableList.copyOf(groups);
   }
 
   @Override
   public Collection<String> doGetGroups(String username) {
     LOG.debug("Looking up user groups for user {}", username);
 
-    Builder<String> groups = ImmutableList.builder();
     try {
-      groups.addAll(getGroupsForUser(username, false));
-      groups.addAll(getGroupsForUser(username, true));
-      return groups.build();
-
+      return getGroupsForUser(username);
     } catch (UserNotFoundException e) {
       return null; // API contract for ExternalGroupsProvider
     } catch (OperationFailedException e) {
