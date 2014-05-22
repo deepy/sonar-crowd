@@ -26,7 +26,7 @@ groups this user belongs to that are refreshed in the SonarQube database.
 # Configuration
 
 | Property          | Description                          | Default value | Mandatory | Example                     |
-----------------------------------------------------------------------------------------------------------------------
+|-------------------|--------------------------------------|---------------|-----------|-----------------------------|
 | crowd.url         | The base URL of the crowd server     | None          | Yes       | http://localhost:8095/crowd |
 | crowd.application | The name of the application in crowd | sonar         | No        | sonar                       |
 | crowd.password    | The password of the application in crowd | None      | Yes       | secret                      |
