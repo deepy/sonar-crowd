@@ -42,7 +42,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
- * @author Ferdinand Hübner
+ * External groups provider implementation for Atlassian Crowd. 
  */
 public class CrowdGroupsProvider extends ExternalGroupsProvider {
 

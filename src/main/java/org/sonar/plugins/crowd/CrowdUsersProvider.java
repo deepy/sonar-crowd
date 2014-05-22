@@ -35,7 +35,7 @@ import org.sonar.api.security.UserDetails;
 import org.sonar.api.utils.SonarException;
 
 /**
- * @author Ferdinand Hübner
+ * External users provider implementation for Atlassian Crowd. 
  */
 public class CrowdUsersProvider extends ExternalUsersProvider {
 

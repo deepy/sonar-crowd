@@ -36,7 +36,7 @@ import org.sonar.api.security.SecurityRealm;
 import org.sonar.api.utils.SonarException;
 
 /**
- * Sonar security realm for crowd.
+ * Sonar security realm for Atlassian Crowd.
  */
 public class CrowdRealm extends SecurityRealm {
 
