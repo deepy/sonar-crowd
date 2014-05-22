@@ -26,20 +26,21 @@ import com.atlassian.crowd.exception.OperationFailedException;
 import com.atlassian.crowd.integration.rest.service.factory.RestCrowdClientFactory;
 import com.atlassian.crowd.service.client.CrowdClient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.sonar.api.security.ExternalGroupsProvider;
 import org.sonar.api.security.ExternalUsersProvider;
 import org.sonar.api.security.LoginPasswordAuthenticator;
 import org.sonar.api.security.SecurityRealm;
 import org.sonar.api.utils.SonarException;
 
-import java.util.Properties;
-
 /**
  * Sonar security realm for crowd.
- *  
- * @author Ferdinand Hübner
  */
 public class CrowdRealm extends SecurityRealm {
+
+  private static final Logger LOG = LoggerFactory.getLogger(CrowdRealm.class);
 
   private final CrowdClient crowdClient;
   private final CrowdAuthenticator authenticator;
@@ -54,11 +55,13 @@ public class CrowdRealm extends SecurityRealm {
   }
 
   private CrowdClient createCrowdClient(CrowdConfiguration configuration) {
-    Properties props = configuration.getClientProperties();
+    String crowdUrl = configuration.getCrowdUrl();
+    String applicationName = configuration.getCrowdApplicationName();
+    String applicationPassword = configuration.getCrowdApplicationPassword();
 
-    String crowdUrl = props.getProperty(CrowdConfiguration.KEY_CROWD_URL);
-    String applicationName = props.getProperty(CrowdConfiguration.KEY_CROWD_APP_NAME);
-    String applicationPassword = props.getProperty(CrowdConfiguration.KEY_CROWD_APP_PASSWORD);
+    LOG.info("Configured Crowd URL: <" + crowdUrl + ">");
+    LOG.info("Configured Crowd Application name: <" + applicationName + ">");
+    LOG.info("Configured Crowd Application password: <" + applicationPassword + ">");
 
     return new RestCrowdClientFactory().newInstance(crowdUrl, applicationName, applicationPassword);
   }

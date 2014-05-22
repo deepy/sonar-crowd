@@ -20,27 +20,22 @@
 
 package org.sonar.plugins.crowd;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.sonar.api.ServerExtension;
 import org.sonar.api.config.Settings;
-
-import java.util.Properties;
 
 /**
  * @author Evgeny Mandrikov
  */
 public class CrowdConfiguration implements ServerExtension {
 
-  private static final Logger LOG = LoggerFactory.getLogger(CrowdConfiguration.class);
+  private static final String KEY_CROWD_URL = "crowd.url";
+  private static final String KEY_CROWD_APP_NAME = "crowd.application";
+  private static final String KEY_CROWD_APP_PASSWORD = "crowd.password";
+  private static final String FALLBACK_NAME = "sonar";
 
-  static final String KEY_CROWD_URL = "crowd.url";
-  static final String KEY_CROWD_APP_NAME = "crowd.application";
-  static final String KEY_CROWD_APP_PASSWORD = "crowd.password";
-
-  private final Settings settings;
-  private Properties clientProperties;
+  private final String crowdUrl;
+  private final String crowdApplicationName;
+  private final String crowdApplicationPassword;
 
   /**
    * Creates new instance of CrowdConfiguration.
@@ -48,48 +43,36 @@ public class CrowdConfiguration implements ServerExtension {
    * @param configuration configuration
    */
   public CrowdConfiguration(Settings settings) {
-    this.settings = settings;
+    crowdUrl = getAndValidate(KEY_CROWD_URL, settings);
+    crowdApplicationName = get(KEY_CROWD_APP_NAME, settings, FALLBACK_NAME);
+    crowdApplicationPassword = getAndValidate(KEY_CROWD_APP_PASSWORD, settings);
   }
 
-  /**
-   * Returns Crowd client properties.
-   *
-   * @return Crowd client properties
-   */
-  public Properties getClientProperties() {
-    if (clientProperties == null) {
-      clientProperties = newInstance();
+  private String get(String key, Settings settings, String fallback) {
+    String value = settings.getString(key);
+    if (value == null) {
+      return fallback;
     }
-    return clientProperties;
+    return value;
   }
 
-  private Properties newInstance() {
-    final String crowdUrl = settings.getString(KEY_CROWD_URL);
-    String applicationName = settings.getString(KEY_CROWD_APP_NAME);
-    final String applicationPassword = settings.getString(KEY_CROWD_APP_PASSWORD);
-
-    if (crowdUrl == null) {
-      throw new IllegalArgumentException("Crowd URL is not set");
+  private String getAndValidate(String key, Settings settings) {
+    String value = settings.getString(key);
+    if (value == null) {
+      throw new IllegalArgumentException(key + " is not set");
     }
-    if (applicationName == null) {
-      applicationName = "sonar";
-    }
-    if (applicationPassword == null) {
-      throw new IllegalArgumentException("Crowd Application Password is not set");
-    }
+    return value;
+  }
 
-    if (LOG.isInfoEnabled()) {
-      LOG.info("Crowd URL: " + crowdUrl);
-      LOG.info("Crowd application name: " + applicationName);
-    }
+  public String getCrowdApplicationName() {
+    return crowdApplicationName;
+  }
 
-    Properties properties = new Properties();
-    properties.setProperty("crowd.server.url", crowdUrl);
-    properties.setProperty("application.name", applicationName);
-    properties.setProperty("application.password", applicationPassword);
+  public String getCrowdApplicationPassword() {
+    return crowdApplicationPassword;
+  }
 
-    // might be a good idea to make this configurable
-    properties.setProperty("session.validationinterval", "5");
-    return properties;
+  public String getCrowdUrl() {
+    return crowdUrl;
   }
 }
