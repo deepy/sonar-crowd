@@ -20,49 +20,48 @@
 
 package org.sonar.plugins.crowd;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.sonar.api.config.Settings;
-
-import java.util.Properties;
-
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
+
+import org.junit.Test;
+
+import org.sonar.api.config.Settings;
 
 public class CrowdConfigurationTest {
 
-  private Settings settings;
-  private CrowdConfiguration crowdConfiguration;
-
-  @Before
-  public void setUp() {
-    settings = new Settings();
-    crowdConfiguration = new CrowdConfiguration(settings);
-  }
-
   @Test(expected = IllegalArgumentException.class)
   public void crowdUrlMissing() {
-    crowdConfiguration.getClientProperties();
+    Settings settings = new Settings();
+    new CrowdConfiguration(settings);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void applicationPasswordMissing() {
-    settings.setProperty("crowd.url", "http://localhost:8095/crowd");
-    crowdConfiguration.getClientProperties();
+    Settings settings = new Settings();
+    settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
+    new CrowdConfiguration(settings);
   }
 
   @Test
-  public void shouldCreateClientProperties() {
-    settings.setProperty("crowd.url", "http://localhost:8095/crowd");
-    settings.setProperty("crowd.password", "secure");
+  public void usesFallbackForUnsetApplicationName() {
+    Settings settings = new Settings();
+    settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
+    settings.setProperty(CrowdConfiguration.KEY_CROWD_APP_PASSWORD, "secret");
+    CrowdConfiguration crowdConfiguration = new CrowdConfiguration(settings);
+    assertThat(crowdConfiguration.getCrowdApplicationName(), is(CrowdConfiguration.FALLBACK_NAME));
+  }
 
-    Properties properties = crowdConfiguration.getClientProperties();
-    assertThat("client properties should be cached", crowdConfiguration.getClientProperties(), sameInstance(properties));
-    assertThat(properties.getProperty("crowd.server.url"), is("http://localhost:8095/crowd"));
-    assertThat("default application.name", properties.getProperty("application.name"), is("sonar"));
-    assertThat(properties.getProperty("application.password"), is("secure"));
-    assertThat(properties.getProperty("session.validationinterval"), is("5"));
+  @Test
+  public void createsClientProperties() {
+    Settings settings = new Settings();
+    settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
+    settings.setProperty(CrowdConfiguration.KEY_CROWD_APP_NAME, "SonarQube");
+    settings.setProperty(CrowdConfiguration.KEY_CROWD_APP_PASSWORD, "secret");
+    CrowdConfiguration crowdConfiguration = new CrowdConfiguration(settings);
+
+    assertThat(crowdConfiguration.getCrowdUrl(), is("http://localhost:8095"));
+    assertThat(crowdConfiguration.getCrowdApplicationName(), is("SonarQube"));
+    assertThat(crowdConfiguration.getCrowdApplicationPassword(), is("secret"));
   }
 
 }

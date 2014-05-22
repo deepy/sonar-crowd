@@ -28,10 +28,10 @@ import org.sonar.api.config.Settings;
  */
 public class CrowdConfiguration implements ServerExtension {
 
-  private static final String KEY_CROWD_URL = "crowd.url";
-  private static final String KEY_CROWD_APP_NAME = "crowd.application";
-  private static final String KEY_CROWD_APP_PASSWORD = "crowd.password";
-  private static final String FALLBACK_NAME = "sonar";
+  static final String KEY_CROWD_URL = "crowd.url";
+  static final String KEY_CROWD_APP_NAME = "crowd.application";
+  static final String KEY_CROWD_APP_PASSWORD = "crowd.password";
+  static final String FALLBACK_NAME = "sonar";
 
   private final String crowdUrl;
   private final String crowdApplicationName;
@@ -64,14 +64,26 @@ public class CrowdConfiguration implements ServerExtension {
     return value;
   }
 
+  /** 
+   * The name that the application will use when authenticating with the Crowd server.<br />
+   * Uses the settings key {@value #KEY_CROWD_APP_NAME} 
+   */
   public String getCrowdApplicationName() {
     return crowdApplicationName;
   }
 
+  /**
+   * The password that the application will use when authenticating with the Crowd server.<br />
+   * Uses the settings key {@value #KEY_CROWD_APP_PASSWORD} 
+   */
   public String getCrowdApplicationPassword() {
     return crowdApplicationPassword;
   }
 
+  /**
+   * The base URL of the crowd server, e.g. {@linkplain http://127.0.0.1:8095/crowd}.<br />
+   * Uses the settings key {@value #KEY_CROWD_URL} 
+   */
   public String getCrowdUrl() {
     return crowdUrl;
   }
