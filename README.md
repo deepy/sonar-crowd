@@ -34,3 +34,4 @@ This plugin requires Atlassian Crowd 2.1.0 or later.
 | crowd.url         | The base URL of the crowd server     | None          | Yes       | http://localhost:8095/crowd |
 | crowd.application | The name of the application in crowd | sonar         | No        | sonar                       |
 | crowd.password    | The password of the application in crowd | None      | Yes       | secret                      |
+| sonar.security.realm | Authenticate against the external system. Set to `Crowd` | None | No | Crowd | 
