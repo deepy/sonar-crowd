@@ -14,6 +14,10 @@ During the first authentication trial, if the password is correct, the SonarQube
 populated with the new user. Each time a user logs into SonarQube, the username, the email and the 
 groups this user belongs to that are refreshed in the SonarQube database.
 
+# Requirements
+
+This plugin requires Atlassian Crowd 2.1.0 or later.
+
 # Usage
 
 1. Configure the crowd plugin by editing the _SONARQUBE_HOME/conf/sonar.properties_ file
