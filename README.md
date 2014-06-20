@@ -16,7 +16,7 @@ groups this user belongs to that are refreshed in the SonarQube database.
 
 # Usage
 
-1. Configure the LDAP plugin by editing the _SONARQUBE_HOME/conf/sonar.properties_ file
+1. Configure the crowd plugin by editing the _SONARQUBE_HOME/conf/sonar.properties_ file
 1. Restart the SonarQube server and check the log file for:
     org.sonar.INFO  Security realm: Crowd
     ...
