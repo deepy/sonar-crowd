@@ -12,7 +12,7 @@
   <packaging>sonar-plugin</packaging>
 
   <name>Sonar Crowd Plugin</name>
-  <description>Enables the delegation of Sonar authentication to Atlassian Crowd.</description>
+  <description>Delegates authentication to Atlassian Crowd.</description>
   <url>http://docs.codehaus.org/display/SONAR/Crowd+Plugin</url>
   <inceptionYear>2009</inceptionYear>
   <organization>

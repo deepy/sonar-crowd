@@ -17,24 +17,31 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-
 package org.sonar.plugins.crowd;
 
-import org.sonar.api.Extension;
-import org.sonar.api.SonarPlugin;
+import org.sonar.api.security.LoginPasswordAuthenticator;
+import org.sonar.api.security.SecurityRealm;
 
-import java.util.ArrayList;
-import java.util.List;
+public class CrowdRealm extends SecurityRealm {
 
-/**
- * @author Evgeny Mandrikov
- */
-
-public class CrowdPlugin extends SonarPlugin {
-	  public List<Class<? extends Extension>> getExtensions() {
-	    ArrayList<Class<? extends Extension>> extensions = new ArrayList<Class<? extends Extension>>();
-	    extensions.add(CrowdRealm.class);
-	    extensions.add(CrowdConfiguration.class);
-	    return extensions;
-	  }
+	private CrowdAuthenticator authenticator;
+	private final CrowdConfiguration configuration;
+	
+	public CrowdRealm(CrowdConfiguration configuration) {
+		this.configuration = configuration;
 	}
+
+	public String getName() {
+		return "Crowd";
+	}
+	
+	@Override
+	public void init() {
+		authenticator = new CrowdAuthenticator(configuration);
+	}
+
+	@Override
+	public LoginPasswordAuthenticator getLoginPasswordAuthenticator() {
+		return authenticator;
+	}
+}
