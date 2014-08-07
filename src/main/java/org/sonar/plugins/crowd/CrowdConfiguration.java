@@ -23,14 +23,19 @@ package org.sonar.plugins.crowd;
 import org.sonar.api.ServerExtension;
 import org.sonar.api.config.Settings;
 
-import java.util.Properties;
-
 /**
  * @author Evgeny Mandrikov
  */
 public class CrowdConfiguration implements ServerExtension {
-  private final Settings settings;
-  private Properties clientProperties;
+
+  static final String KEY_CROWD_URL = "crowd.url";
+  static final String KEY_CROWD_APP_NAME = "crowd.application";
+  static final String KEY_CROWD_APP_PASSWORD = "crowd.password";
+  static final String FALLBACK_NAME = "sonar";
+
+  private final String crowdUrl;
+  private final String crowdApplicationName;
+  private final String crowdApplicationPassword;
 
   /**
    * Creates new instance of CrowdConfiguration.
@@ -38,46 +43,48 @@ public class CrowdConfiguration implements ServerExtension {
    * @param configuration configuration
    */
   public CrowdConfiguration(Settings settings) {
-    this.settings = settings;
+    crowdUrl = getAndValidate(KEY_CROWD_URL, settings);
+    crowdApplicationName = get(KEY_CROWD_APP_NAME, settings, FALLBACK_NAME);
+    crowdApplicationPassword = getAndValidate(KEY_CROWD_APP_PASSWORD, settings);
+  }
+
+  private String get(String key, Settings settings, String fallback) {
+    String value = settings.getString(key);
+    if (value == null) {
+      return fallback;
+    }
+    return value;
+  }
+
+  private String getAndValidate(String key, Settings settings) {
+    String value = settings.getString(key);
+    if (value == null) {
+      throw new IllegalArgumentException(key + " is not set");
+    }
+    return value;
+  }
+
+  /** 
+   * The name that the application will use when authenticating with the Crowd server.<br />
+   * Uses the settings key {@value #KEY_CROWD_APP_NAME} 
+   */
+  public String getCrowdApplicationName() {
+    return crowdApplicationName;
   }
 
   /**
-   * Returns Crowd client properties.
-   *
-   * @return Crowd client properties
+   * The password that the application will use when authenticating with the Crowd server.<br />
+   * Uses the settings key {@value #KEY_CROWD_APP_PASSWORD} 
    */
-  public Properties getClientProperties() {
-    if (clientProperties == null) {
-      clientProperties = newInstance();
-    }
-    return clientProperties;
+  public String getCrowdApplicationPassword() {
+    return crowdApplicationPassword;
   }
 
-  private Properties newInstance() {
-    final String crowdUrl = settings.getString("crowd.url");
-    String applicationName = settings.getString("crowd.application");
-    final String applicationPassword = settings.getString("crowd.password");
-
-    if (crowdUrl == null) {
-      throw new IllegalArgumentException("Crowd URL is not set");
-    }
-    if (applicationName == null) {
-      applicationName = "sonar";
-    }
-    if (applicationPassword == null) {
-      throw new IllegalArgumentException("Crowd Application Password is not set");
-    }
-
-    if (CrowdHelper.LOG.isInfoEnabled()) {
-      CrowdHelper.LOG.info("URL: " + crowdUrl);
-      CrowdHelper.LOG.info("Application Name: " + applicationName);
-    }
-
-    Properties properties = new Properties();
-    properties.setProperty("crowd.server.url", crowdUrl);
-    properties.setProperty("application.name", applicationName);
-    properties.setProperty("application.password", applicationPassword);
-    properties.setProperty("session.validationinterval", "5");
-    return properties;
+  /**
+   * The base URL of the crowd server, e.g. {@linkplain http://127.0.0.1:8095/crowd}.<br />
+   * Uses the settings key {@value #KEY_CROWD_URL} 
+   */
+  public String getCrowdUrl() {
+    return crowdUrl;
   }
 }
