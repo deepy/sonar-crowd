@@ -4,7 +4,6 @@
     <groupId>org.codehaus.sonar-plugins</groupId>
     <artifactId>parent</artifactId>
     <version>18</version>
-    <relativePath>../parent</relativePath>
   </parent>
 
   <artifactId>sonar-crowd-plugin</artifactId>
