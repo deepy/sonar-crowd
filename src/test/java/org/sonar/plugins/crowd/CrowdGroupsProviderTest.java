@@ -20,30 +20,25 @@
 
 package org.sonar.plugins.crowd;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.atlassian.crowd.exception.OperationFailedException;
 import com.atlassian.crowd.exception.UserNotFoundException;
 import com.atlassian.crowd.model.group.Group;
 import com.atlassian.crowd.service.client.CrowdClient;
 import com.google.common.collect.ImmutableList.Builder;
 import com.google.common.collect.Lists;
-
 import org.junit.Test;
-
 import org.sonar.api.utils.SonarException;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 public class CrowdGroupsProviderTest {
 
@@ -51,7 +46,7 @@ public class CrowdGroupsProviderTest {
   public void returnsNullIfTheUserWasNotFound() throws Exception {
     CrowdClient client = mock(CrowdClient.class);
     when(client.getGroupsForNestedUser(anyString(), anyInt(), anyInt())).thenThrow(
-        new UserNotFoundException(""));
+      new UserNotFoundException(""));
     assertThat(new CrowdGroupsProvider(client).doGetGroups("user"), is(nullValue()));
   }
 
@@ -59,7 +54,7 @@ public class CrowdGroupsProviderTest {
   public void throwsSonarExceptionIfCommunicationWithCrowdFails() throws Exception {
     CrowdClient client = mock(CrowdClient.class);
     when(client.getGroupsForNestedUser(anyString(), anyInt(), anyInt())).thenThrow(
-        new OperationFailedException(""));
+      new OperationFailedException(""));
     new CrowdGroupsProvider(client).doGetGroups("user");
   }
 
@@ -85,7 +80,7 @@ public class CrowdGroupsProviderTest {
     when(client.getGroupsForNestedUser(anyString(), anyInt(), anyInt())).thenReturn(groups);
 
     List<String> resolvedGroups =
-        Lists.newLinkedList(new CrowdGroupsProvider(client).doGetGroups("user"));
+      Lists.newLinkedList(new CrowdGroupsProvider(client).doGetGroups("user"));
     assertThat(resolvedGroups.size(), is(groups.size()));
     for (int i = 0; i < groups.size(); i++) {
       assertThat(resolvedGroups.get(i), is(groups.get(i).getName()));
@@ -106,7 +101,7 @@ public class CrowdGroupsProviderTest {
     when(client.getGroupsForNestedUser(anyString(), eq(100), anyInt())).thenReturn(secondGroups);
 
     List<String> resolvedGroups =
-        Lists.newLinkedList(new CrowdGroupsProvider(client).doGetGroups("user"));
+      Lists.newLinkedList(new CrowdGroupsProvider(client).doGetGroups("user"));
     assertThat(resolvedGroups.size(), is(125));
     for (int i = 0; i < resolvedGroups.size(); i++) {
       assertThat(resolvedGroups.get(i), is(allGroups.get(i).getName()));

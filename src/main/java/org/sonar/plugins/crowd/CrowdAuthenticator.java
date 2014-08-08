@@ -20,17 +20,10 @@
 
 package org.sonar.plugins.crowd;
 
-import com.atlassian.crowd.exception.ApplicationPermissionException;
-import com.atlassian.crowd.exception.ExpiredCredentialException;
-import com.atlassian.crowd.exception.InactiveAccountException;
-import com.atlassian.crowd.exception.InvalidAuthenticationException;
-import com.atlassian.crowd.exception.OperationFailedException;
-import com.atlassian.crowd.exception.UserNotFoundException;
+import com.atlassian.crowd.exception.*;
 import com.atlassian.crowd.service.client.CrowdClient;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.sonar.api.security.LoginPasswordAuthenticator;
 
 /**
@@ -67,7 +60,7 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
       return false;
     } catch (ApplicationPermissionException e) {
       LOG.error("The application is not permitted to perform the requested operation"
-          + " on the crowd server", e);
+        + " on the crowd server", e);
       return false;
     } catch (InvalidAuthenticationException e) {
       LOG.debug("Invalid credentials for user {}", login);

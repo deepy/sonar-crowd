@@ -20,19 +20,18 @@
 
 package org.sonar.plugins.crowd;
 
+import com.atlassian.crowd.exception.InvalidAuthenticationException;
+import com.atlassian.crowd.exception.UserNotFoundException;
+import com.atlassian.crowd.model.user.User;
+import com.atlassian.crowd.service.client.CrowdClient;
+import org.junit.Test;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import com.atlassian.crowd.exception.InvalidAuthenticationException;
-import com.atlassian.crowd.exception.UserNotFoundException;
-import com.atlassian.crowd.model.user.User;
-import com.atlassian.crowd.service.client.CrowdClient;
-
-import org.junit.Test;
 
 public class CrowdAuthenticatorTest {
 
@@ -46,7 +45,7 @@ public class CrowdAuthenticatorTest {
     assertThat(authenticator.authenticate("user1", "secret"), is(true));
 
     when(client.authenticateUser(anyString(), anyString()))
-        .thenThrow(new UserNotFoundException(""));
+      .thenThrow(new UserNotFoundException(""));
     assertThat(authenticator.authenticate("user2", "secret"), is(false));
   }
 
@@ -56,7 +55,7 @@ public class CrowdAuthenticatorTest {
     CrowdAuthenticator authenticator = new CrowdAuthenticator(client);
 
     when(client.authenticateUser(anyString(), anyString())).thenThrow(
-        new InvalidAuthenticationException(""));
+      new InvalidAuthenticationException(""));
     assertThat(authenticator.authenticate("user1", "secret"), is(false));
   }
 }

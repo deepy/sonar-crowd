@@ -64,9 +64,9 @@ public class CrowdConfiguration implements ServerExtension {
     return value;
   }
 
-  /** 
+  /**
    * The name that the application will use when authenticating with the Crowd server.<br />
-   * Uses the settings key {@value #KEY_CROWD_APP_NAME} 
+   * Uses the settings key {@value #KEY_CROWD_APP_NAME}
    */
   public String getCrowdApplicationName() {
     return crowdApplicationName;
@@ -74,7 +74,7 @@ public class CrowdConfiguration implements ServerExtension {
 
   /**
    * The password that the application will use when authenticating with the Crowd server.<br />
-   * Uses the settings key {@value #KEY_CROWD_APP_PASSWORD} 
+   * Uses the settings key {@value #KEY_CROWD_APP_PASSWORD}
    */
   public String getCrowdApplicationPassword() {
     return crowdApplicationPassword;
@@ -82,7 +82,7 @@ public class CrowdConfiguration implements ServerExtension {
 
   /**
    * The base URL of the crowd server, e.g. {@linkplain http://127.0.0.1:8095/crowd}.<br />
-   * Uses the settings key {@value #KEY_CROWD_URL} 
+   * Uses the settings key {@value #KEY_CROWD_URL}
    */
   public String getCrowdUrl() {
     return crowdUrl;

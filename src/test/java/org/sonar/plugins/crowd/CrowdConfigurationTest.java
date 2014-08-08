@@ -20,12 +20,11 @@
 
 package org.sonar.plugins.crowd;
 
+import org.junit.Test;
+import org.sonar.api.config.Settings;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
-
-import org.sonar.api.config.Settings;
 
 public class CrowdConfigurationTest {
 

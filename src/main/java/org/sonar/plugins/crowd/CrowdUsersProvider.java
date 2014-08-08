@@ -26,10 +26,8 @@ import com.atlassian.crowd.exception.OperationFailedException;
 import com.atlassian.crowd.exception.UserNotFoundException;
 import com.atlassian.crowd.model.user.User;
 import com.atlassian.crowd.service.client.CrowdClient;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.sonar.api.security.ExternalUsersProvider;
 import org.sonar.api.security.UserDetails;
 import org.sonar.api.utils.SonarException;
@@ -65,15 +63,15 @@ public class CrowdUsersProvider extends ExternalUsersProvider {
       return null; // API contract for ExternalUsersProvider
     } catch (OperationFailedException e) {
       throw new SonarException("Unable to retrieve user details for user" + username
-          + " from crowd.", e);
+        + " from crowd.", e);
     } catch (ApplicationPermissionException e) {
       throw new SonarException(
-          "Unable to retrieve user details for user" + username
-              + " from crowd. The application is not permitted to perform the "
-              + "requested operation on the crowd server.", e);
+        "Unable to retrieve user details for user" + username
+          + " from crowd. The application is not permitted to perform the "
+          + "requested operation on the crowd server.", e);
     } catch (InvalidAuthenticationException e) {
       throw new SonarException("Unable to retrieve user details for user" + username
-          + " from crowd. The application name and password are incorrect.", e);
+        + " from crowd. The application name and password are incorrect.", e);
     }
   }
 

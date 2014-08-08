@@ -20,12 +20,6 @@
 
 package org.sonar.plugins.crowd;
 
-import org.sonar.api.security.ExternalGroupsProvider;
-import org.sonar.api.security.ExternalUsersProvider;
-import org.sonar.api.security.LoginPasswordAuthenticator;
-import org.sonar.api.security.SecurityRealm;
-import org.sonar.api.utils.SonarException;
-
 import com.atlassian.crowd.exception.ApplicationPermissionException;
 import com.atlassian.crowd.exception.InvalidAuthenticationException;
 import com.atlassian.crowd.exception.OperationFailedException;
@@ -33,9 +27,15 @@ import com.atlassian.crowd.integration.rest.service.factory.RestCrowdClientFacto
 import com.atlassian.crowd.service.client.ClientProperties;
 import com.atlassian.crowd.service.client.ClientPropertiesImpl;
 import com.atlassian.crowd.service.client.CrowdClient;
-import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonar.api.security.ExternalGroupsProvider;
+import org.sonar.api.security.ExternalUsersProvider;
+import org.sonar.api.security.LoginPasswordAuthenticator;
+import org.sonar.api.security.SecurityRealm;
+import org.sonar.api.utils.SonarException;
+
+import java.util.Properties;
 
 /**
  * Sonar security realm for Atlassian Crowd.
@@ -98,7 +98,7 @@ public class CrowdRealm extends SecurityRealm {
       throw new SonarException("Application name and password are incorrect", e);
     } catch (ApplicationPermissionException e) {
       throw new SonarException("The application is not permitted to perform the requested "
-          + "operation on the crowd server", e);
+        + "operation on the crowd server", e);
     }
   }
 

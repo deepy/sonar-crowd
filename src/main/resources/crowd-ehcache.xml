@@ -1,5 +1,4 @@
 <ehcache>
-
     <!-- Sets the path to the directory where cache .data files are created.
 
          If the path is a Java System Property it is replaced by
@@ -10,7 +9,6 @@
          user.dir - User's current working directory
          java.io.tmpdir - Default temp file path -->
     <diskStore path="java.io.tmpdir"/>
-
     <!--Default Cache configuration. These will applied to caches programmatically created through
         the CacheManager.
 
@@ -38,7 +36,6 @@
         diskExpiryThreadIntervalSeconds- The number of seconds between runs of the disk expiry thread. The default value
                                          is 120 seconds.
         -->
-
     <defaultCache
             maxElementsInMemory="50000"
             eternal="false"
@@ -47,7 +44,6 @@
             timeToLiveSeconds="3600"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches individual user objects
         Sizing: the number of users in your system. -->
     <cache name="com.atlassian.crowd.integration-user"
@@ -58,7 +54,6 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches the list of all usernames in the system.
         Sizing: One. There's only one list. -->
     <cache name="com.atlassian.crowd.integration-usernames"
@@ -69,7 +64,6 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches individual group objects.
         Sizing: the number of groups in your system. -->
     <cache name="com.atlassian.crowd.integration-group"
@@ -80,7 +74,6 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches the list of all group names in the system.
         Sizing: One. There's only one list. -->
     <cache name="com.atlassian.crowd.integration-groupnames"
@@ -91,7 +84,6 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches a list of group -> parentGroups. Needed for supporting certain API calls with nested groups.
         Sizing: The number of groups in your system. -->
     <cache name="com.atlassian.crowd.integration-parentgroup"
@@ -102,7 +94,6 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches whether a user belongs in a given group.
         Sizing: Number of users times number of groups. This could be quite large, so you can optimize by setting it
          to the number that are likely to be active at any one time. The algorithm will fall back to using the
@@ -115,7 +106,6 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches the list of all groups a user is in.
         Sizing: the number of users in your system. -->
     <cache name="com.atlassian.crowd.integration-all-memberships"
@@ -126,7 +116,6 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches the list of users in a group plus its subgroups.
             Sizing: the number of groups in your system. -->
     <cache name="com.atlassian.crowd.integration-all-group-members"
@@ -137,7 +126,6 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches the list of usernames in lower-case to correct-case usernames.
            Sizing: the number of users in your system. -->
     <cache name="com.atlassian.crowd.integration-username-case"
@@ -148,7 +136,6 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
     <!-- Caches the list of groupnames in lower-case to correct-case groupnames.
            Sizing: the number of groups in your system. -->
     <cache name="com.atlassian.crowd.integration-groupname-case"
@@ -159,7 +146,5 @@
            timeToLiveSeconds="3600"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"/>
-
-
     <!-- See http://ehcache.sourceforge.net/documentation/#mozTocId258426 for how to configure caching for your objects -->
 </ehcache>

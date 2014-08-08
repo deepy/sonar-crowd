@@ -20,23 +20,19 @@
 
 package org.sonar.plugins.crowd;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.atlassian.crowd.exception.OperationFailedException;
 import com.atlassian.crowd.exception.UserNotFoundException;
 import com.atlassian.crowd.model.user.User;
 import com.atlassian.crowd.service.client.CrowdClient;
-
 import org.junit.Test;
-
 import org.sonar.api.security.UserDetails;
 import org.sonar.api.utils.SonarException;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CrowdUsersProviderTest {
 

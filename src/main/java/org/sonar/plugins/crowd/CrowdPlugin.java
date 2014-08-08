@@ -22,7 +22,6 @@ package org.sonar.plugins.crowd;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
-
 import org.sonar.api.Extension;
 import org.sonar.api.SonarPlugin;
 
