@@ -31,6 +31,12 @@
             <timezone>+3</timezone>
         </developer>
     </developers>
+    <contributors>
+        <contributor>
+            <name>Ferdinand Hübner</name>
+            <url>https://github.com/ferdinandhuebner</url>
+        </contributor>
+    </contributors>
     <scm>
         <connection>scm:git:https://github.com/SonarCommunity/sonar-crowd.git</connection>
         <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-crowd.git</developerConnection>
