@@ -30,6 +30,11 @@
             <name>Evgeny Mandrikov</name>
             <timezone>+3</timezone>
         </developer>
+        <developer>
+            <id>aheritier</id>
+            <name>Arnaud Héritier</name>
+            <url>https://github.com/aheritier</url>
+        </developer>
     </developers>
     <contributors>
         <contributor>
