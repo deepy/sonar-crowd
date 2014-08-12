@@ -52,8 +52,8 @@
         <url>http://jira.codehaus.org/browse/SONARPLUGINS/component/14294</url>
     </issueManagement>
     <ciManagement>
-        <system>Bamboo</system>
-        <url>http://ci.codehaus.org/browse/SONAR-CROWD</url>
+        <system>Jenkins</system>
+        <url>https://sonarplugins.ci.cloudbees.com/job/crowd/</url>
     </ciManagement>
     <properties>
         <sonar.version>3.0</sonar.version>
