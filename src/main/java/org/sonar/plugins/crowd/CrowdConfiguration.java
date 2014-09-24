@@ -32,10 +32,7 @@ public class CrowdConfiguration implements ServerExtension {
   static final String KEY_CROWD_APP_NAME = "crowd.application";
   static final String KEY_CROWD_APP_PASSWORD = "crowd.password";
   static final String FALLBACK_NAME = "sonar";
-
-  private final String crowdUrl;
-  private final String crowdApplicationName;
-  private final String crowdApplicationPassword;
+  private final Settings settings;
 
   /**
    * Creates new instance of CrowdConfiguration.
@@ -43,9 +40,7 @@ public class CrowdConfiguration implements ServerExtension {
    * @param configuration configuration
    */
   public CrowdConfiguration(Settings settings) {
-    crowdUrl = getAndValidate(KEY_CROWD_URL, settings);
-    crowdApplicationName = get(KEY_CROWD_APP_NAME, settings, FALLBACK_NAME);
-    crowdApplicationPassword = getAndValidate(KEY_CROWD_APP_PASSWORD, settings);
+    this.settings = settings;
   }
 
   private String get(String key, Settings settings, String fallback) {
@@ -69,7 +64,7 @@ public class CrowdConfiguration implements ServerExtension {
    * Uses the settings key {@value #KEY_CROWD_APP_NAME}
    */
   public String getCrowdApplicationName() {
-    return crowdApplicationName;
+    return get(KEY_CROWD_APP_NAME, settings, FALLBACK_NAME);
   }
 
   /**
@@ -77,7 +72,7 @@ public class CrowdConfiguration implements ServerExtension {
    * Uses the settings key {@value #KEY_CROWD_APP_PASSWORD}
    */
   public String getCrowdApplicationPassword() {
-    return crowdApplicationPassword;
+    return getAndValidate(KEY_CROWD_APP_PASSWORD, settings);
   }
 
   /**
@@ -85,6 +80,6 @@ public class CrowdConfiguration implements ServerExtension {
    * Uses the settings key {@value #KEY_CROWD_URL}
    */
   public String getCrowdUrl() {
-    return crowdUrl;
+    return getAndValidate(KEY_CROWD_URL, settings);
   }
 }

@@ -31,14 +31,14 @@ public class CrowdConfigurationTest {
   @Test(expected = IllegalArgumentException.class)
   public void crowdUrlMissing() {
     Settings settings = new Settings();
-    new CrowdConfiguration(settings);
+    new CrowdConfiguration(settings).getCrowdUrl();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void applicationPasswordMissing() {
     Settings settings = new Settings();
     settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
-    new CrowdConfiguration(settings);
+    new CrowdConfiguration(settings).getCrowdApplicationPassword();
   }
 
   @Test
