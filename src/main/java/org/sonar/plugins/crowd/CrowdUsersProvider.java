@@ -30,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.security.ExternalUsersProvider;
 import org.sonar.api.security.UserDetails;
-import org.sonar.api.utils.SonarException;
 
 /**
  * External users provider implementation for Atlassian Crowd. 
@@ -62,15 +61,15 @@ public class CrowdUsersProvider extends ExternalUsersProvider {
     } catch (UserNotFoundException e) {
       return null; // API contract for ExternalUsersProvider
     } catch (OperationFailedException e) {
-      throw new SonarException("Unable to retrieve user details for user" + username
+      throw new RuntimeException("Unable to retrieve user details for user" + username
         + " from crowd.", e);
     } catch (ApplicationPermissionException e) {
-      throw new SonarException(
+      throw new RuntimeException(
         "Unable to retrieve user details for user" + username
           + " from crowd. The application is not permitted to perform the "
           + "requested operation on the crowd server.", e);
     } catch (InvalidAuthenticationException e) {
-      throw new SonarException("Unable to retrieve user details for user" + username
+      throw new RuntimeException("Unable to retrieve user details for user" + username
         + " from crowd. The application name and password are incorrect.", e);
     }
   }
