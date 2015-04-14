@@ -85,7 +85,7 @@ Available since SonarQube 3.6.</td>
 </tr>
 </table>
 
-### Example of LDAP Configuration
+### Example of CROWD Configuration
 ```
 #-------------------
 # Sonar Crowd Plugin
