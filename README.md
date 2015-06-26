@@ -122,3 +122,7 @@ sonar.security.localUsers=admin,sonar
 ### from Crowd plugin 1.0 to 2.0
 * Crowd plugin 2.0+ uses the REST API provided by Crowd. The crowd url used in the configuration (crowd.url) must be the main URL of your crowd instance and not its /services/ end point (used with the previous SOAP integration)
 * Crowd plugin 2.0+ synchronises groups from Crowd thus take care to create a group sonar-administrators in your Crowd directory and add in this group all users you'll want to use to administer SonarQube. You can also define some accounts to not synchronise with the property sonar.security.localUsers
+
+### Build status
+
+[![Build Status](https://api.travis-ci.org/SonarCommunity/sonar-crowd.svg)](https://travis-ci.org/SonarCommunity/sonar-crowd)
