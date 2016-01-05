@@ -1,4 +1,4 @@
-# Sonar Crowd Plugin
+# Crowd Plugin for SonarQube
 
 Download and Versions information: http://update.sonarsource.org/plugins/crowd-confluence.html
 
