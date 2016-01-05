@@ -125,4 +125,4 @@ sonar.security.localUsers=admin,sonar
 
 ### Build status
 
-[![Build Status](https://api.travis-ci.org/SonarCommunity/sonar-crowd.svg)](https://travis-ci.org/SonarCommunity/sonar-crowd)
+[![Build Status](https://api.travis-ci.org/SonarQubeCommunity/sonar-crowd.svg)](https://travis-ci.org/SonarQubeCommunity/sonar-crowd)
