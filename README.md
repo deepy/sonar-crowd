@@ -1,4 +1,5 @@
 # Crowd Plugin for SonarQube
+[![Nemo Quality Gate status](https://nemo.sonarqube.org/api/badges/gate?key=org.codehaus.sonar-plugins%3Asonar-crowd-plugin)](https://nemo.sonarqube.org/overview?id=org.codehaus.sonar-plugins%3Asonar-crowd-plugin)
 
 Download and Versions information: http://update.sonarsource.org/plugins/crowd-confluence.html
 
