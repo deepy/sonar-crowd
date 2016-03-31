@@ -27,7 +27,6 @@ import com.atlassian.crowd.service.client.CrowdClient;
 import com.google.common.collect.ImmutableList.Builder;
 import com.google.common.collect.Lists;
 import org.junit.Test;
-import org.sonar.api.utils.SonarException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -50,7 +49,7 @@ public class CrowdGroupsProviderTest {
     assertThat(new CrowdGroupsProvider(client).doGetGroups("user"), is(nullValue()));
   }
 
-  @Test(expected = SonarException.class)
+  @Test(expected = RuntimeException.class)
   public void throwsSonarExceptionIfCommunicationWithCrowdFails() throws Exception {
     CrowdClient client = mock(CrowdClient.class);
     when(client.getGroupsForNestedUser(anyString(), anyInt(), anyInt())).thenThrow(

@@ -1,10 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.codehaus.sonar-plugins</groupId>
-        <artifactId>parent</artifactId>
-        <version>19</version>
-    </parent>
+
+    <groupId>org.codehaus.sonar-plugins</groupId>
     <artifactId>sonar-crowd-plugin</artifactId>
     <version>2.1-SNAPSHOT</version>
     <packaging>sonar-plugin</packaging>
@@ -45,8 +43,8 @@
         <connection>scm:git:https://github.com/SonarCommunity/sonar-crowd.git</connection>
         <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-crowd.git</developerConnection>
         <url>https://github.com/SonarCommunity/sonar-crowd</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
     <issueManagement>
         <system>JIRA</system>
         <url>http://jira.codehaus.org/browse/SONARPLUGINS/component/14294</url>
@@ -56,7 +54,8 @@
         <url>https://sonarplugins.ci.cloudbees.com/job/crowd/</url>
     </ciManagement>
     <properties>
-        <sonar.version>3.0</sonar.version>
+        <sonar.version>4.5.2</sonar.version>
+        <jdk.min.version>1.7</jdk.min.version>
         <sonar.pluginName>Crowd</sonar.pluginName>
         <sonar.pluginClass>org.sonar.plugins.crowd.CrowdPlugin</sonar.pluginClass>
     </properties>
@@ -90,7 +89,37 @@
             <version>${sonar.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.sonar</groupId>
+                <artifactId>sonar-packaging-maven-plugin</artifactId>
+                <version>1.12.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <pluginClass>org.sonar.plugins.crowd.CrowdPlugin</pluginClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${jdk.min.version}</source>
+                    <target>${jdk.min.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <repositories>
         <repository>
             <id>atlassian</id>

@@ -20,16 +20,17 @@
 
 package org.sonar.plugins.crowd;
 
-import com.atlassian.crowd.exception.*;
-import com.atlassian.crowd.service.client.CrowdClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.security.LoginPasswordAuthenticator;
+import org.sonar.api.security.Authenticator;
+
+import com.atlassian.crowd.exception.*;
+import com.atlassian.crowd.service.client.CrowdClient;
 
 /**
  * @author Evgeny Mandrikov
  */
-public class CrowdAuthenticator implements LoginPasswordAuthenticator {
+public class CrowdAuthenticator extends Authenticator {
 
   private static final Logger LOG = LoggerFactory.getLogger(CrowdAuthenticator.class);
 
@@ -40,14 +41,10 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
   }
 
   @Override
-  public void init() {
-    // noop
-  }
-
-  @Override
-  public boolean authenticate(String login, String password) {
+  public boolean doAuthenticate(Context context) {
+    String login = context.getUsername();
     try {
-      client.authenticateUser(login, password);
+      client.authenticateUser(login, context.getPassword());
       return true;
     } catch (UserNotFoundException e) {
       LOG.debug("User {} not found", login);
@@ -59,8 +56,7 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
       LOG.debug("Credentials of user {} have expired", login);
       return false;
     } catch (ApplicationPermissionException e) {
-      LOG.error("The application is not permitted to perform the requested operation"
-        + " on the crowd server", e);
+      LOG.error("The application is not permitted to perform the requested operation" + " on the crowd server", e);
       return false;
     } catch (InvalidAuthenticationException e) {
       LOG.debug("Invalid credentials for user {}", login);

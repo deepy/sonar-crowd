@@ -27,13 +27,13 @@ import com.atlassian.crowd.integration.rest.service.factory.RestCrowdClientFacto
 import com.atlassian.crowd.service.client.ClientProperties;
 import com.atlassian.crowd.service.client.ClientPropertiesImpl;
 import com.atlassian.crowd.service.client.CrowdClient;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonar.api.security.Authenticator;
 import org.sonar.api.security.ExternalGroupsProvider;
 import org.sonar.api.security.ExternalUsersProvider;
-import org.sonar.api.security.LoginPasswordAuthenticator;
 import org.sonar.api.security.SecurityRealm;
-import org.sonar.api.utils.SonarException;
 
 import java.util.Properties;
 
@@ -97,17 +97,17 @@ public class CrowdRealm extends SecurityRealm {
       crowdClient.testConnection();
       LOG.info("Crowd configuration is valid, connection test successful.");
     } catch (OperationFailedException e) {
-      throw new SonarException("Unable to test connection to crowd", e);
+      throw new RuntimeException("Unable to test connection to crowd", e);
     } catch (InvalidAuthenticationException e) {
-      throw new SonarException("Application name and password are incorrect", e);
+      throw new RuntimeException("Application name and password are incorrect", e);
     } catch (ApplicationPermissionException e) {
-      throw new SonarException("The application is not permitted to perform the requested "
+      throw new RuntimeException("The application is not permitted to perform the requested "
         + "operation on the crowd server", e);
     }
   }
 
   @Override
-  public LoginPasswordAuthenticator getLoginPasswordAuthenticator() {
+  public Authenticator doGetAuthenticator() {
     return authenticator;
   }
 
