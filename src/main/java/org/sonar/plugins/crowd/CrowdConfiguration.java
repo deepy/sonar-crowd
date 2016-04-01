@@ -32,6 +32,7 @@ public class CrowdConfiguration implements ServerExtension {
   static final String KEY_CROWD_APP_NAME = "crowd.application";
   static final String KEY_CROWD_APP_PASSWORD = "crowd.password";
   static final String FALLBACK_NAME = "sonar";
+  static final String KEY_CROWD_GRP_SYNC = "crowd.groups.sync";
   private final Settings settings;
 
   /**
@@ -81,5 +82,13 @@ public class CrowdConfiguration implements ServerExtension {
    */
   public String getCrowdUrl() {
     return getAndValidate(KEY_CROWD_URL, settings);
+  }
+  
+  /**
+   * Define if the Groups have to be synced from the Crowd server.
+   * Defaults to true if not provided.
+   */
+  public String getCrowdGrpSync() {
+      return get(KEY_CROWD_GRP_SYNC, settings, "true");
   }
 }
