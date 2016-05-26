@@ -10,7 +10,7 @@
     <packaging>sonar-plugin</packaging>
     <name>Sonar Crowd Plugin</name>
     <description>Delegates authentication to Atlassian Crowd.</description>
-    <url>http://docs.codehaus.org/display/SONAR/Crowd+Plugin</url>
+    <url>https://github.com/SonarQubeCommunity/sonar-crowd</url>
     <inceptionYear>2009</inceptionYear>
     <organization>
         <name>SonarSource</name>
@@ -42,19 +42,15 @@
         </contributor>
     </contributors>
     <scm>
-        <connection>scm:git:https://github.com/SonarCommunity/sonar-crowd.git</connection>
-        <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-crowd.git</developerConnection>
-        <url>https://github.com/SonarCommunity/sonar-crowd</url>
+        <connection>scm:git:https://github.com/SonarQubeCommunity/sonar-crowd.git</connection>
+        <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-crowd.git</developerConnection>
+        <url>https://github.com/SonarQubeCommunity/sonar-crowd</url>
       <tag>HEAD</tag>
-  </scm>
+    </scm>
     <issueManagement>
-        <system>JIRA</system>
-        <url>http://jira.codehaus.org/browse/SONARPLUGINS/component/14294</url>
+        <system>GitHub Issues</system>
+        <url>https://github.com/SonarQubeCommunity/sonar-crowd/issues</url>
     </issueManagement>
-    <ciManagement>
-        <system>Jenkins</system>
-        <url>https://sonarplugins.ci.cloudbees.com/job/crowd/</url>
-    </ciManagement>
     <properties>
         <sonar.version>3.0</sonar.version>
         <sonar.pluginName>Crowd</sonar.pluginName>
