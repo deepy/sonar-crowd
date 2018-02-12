@@ -12,10 +12,6 @@
     <description>Delegates authentication to Atlassian Crowd.</description>
     <url>https://github.com/SonarQubeCommunity/sonar-crowd</url>
     <inceptionYear>2009</inceptionYear>
-    <organization>
-        <name>SonarSource</name>
-        <url>http://www.sonarsource.com</url>
-    </organization>
     <licenses>
         <license>
             <name>GNU LGPL 3</name>
