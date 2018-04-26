@@ -19,6 +19,16 @@
  */
 package org.sonar.plugins.crowd;
 
+import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.sonar.api.security.Authenticator;
+import org.sonar.api.security.ExternalGroupsProvider;
+import org.sonar.api.security.ExternalUsersProvider;
+import org.sonar.api.security.SecurityRealm;
+import org.sonar.api.utils.SonarException;
+
 import com.atlassian.crowd.exception.ApplicationPermissionException;
 import com.atlassian.crowd.exception.InvalidAuthenticationException;
 import com.atlassian.crowd.exception.OperationFailedException;
@@ -26,15 +36,6 @@ import com.atlassian.crowd.integration.rest.service.factory.RestCrowdClientFacto
 import com.atlassian.crowd.service.client.ClientProperties;
 import com.atlassian.crowd.service.client.ClientPropertiesImpl;
 import com.atlassian.crowd.service.client.CrowdClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.sonar.api.security.ExternalGroupsProvider;
-import org.sonar.api.security.ExternalUsersProvider;
-import org.sonar.api.security.LoginPasswordAuthenticator;
-import org.sonar.api.security.SecurityRealm;
-import org.sonar.api.utils.SonarException;
-
-import java.util.Properties;
 
 /**
  * Sonar security realm for Atlassian Crowd.
@@ -106,7 +107,7 @@ public class CrowdRealm extends SecurityRealm {
   }
 
   @Override
-  public LoginPasswordAuthenticator getLoginPasswordAuthenticator() {
+  public Authenticator doGetAuthenticator() {
     return authenticator;
   }
 

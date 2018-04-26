@@ -19,16 +19,22 @@
  */
 package org.sonar.plugins.crowd;
 
-import com.atlassian.crowd.exception.*;
-import com.atlassian.crowd.service.client.CrowdClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.security.LoginPasswordAuthenticator;
+import org.sonar.api.security.Authenticator;
+
+import com.atlassian.crowd.exception.ApplicationPermissionException;
+import com.atlassian.crowd.exception.ExpiredCredentialException;
+import com.atlassian.crowd.exception.InactiveAccountException;
+import com.atlassian.crowd.exception.InvalidAuthenticationException;
+import com.atlassian.crowd.exception.OperationFailedException;
+import com.atlassian.crowd.exception.UserNotFoundException;
+import com.atlassian.crowd.service.client.CrowdClient;
 
 /**
  * @author Evgeny Mandrikov
  */
-public class CrowdAuthenticator implements LoginPasswordAuthenticator {
+public class CrowdAuthenticator extends Authenticator {
 
   private static final Logger LOG = LoggerFactory.getLogger(CrowdAuthenticator.class);
 
@@ -39,11 +45,13 @@ public class CrowdAuthenticator implements LoginPasswordAuthenticator {
   }
 
   @Override
-  public void init() {
-    // noop
+  public boolean doAuthenticate(final Context context) {
+    final String username = context.getUsername();
+    final String password = context.getPassword();
+    return authenticate(username, password);
   }
 
-  @Override
+
   public boolean authenticate(String login, String password) {
     try {
       client.authenticateUser(login, password);
