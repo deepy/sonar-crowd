@@ -63,17 +63,6 @@
             <groupId>com.atlassian.crowd</groupId>
             <artifactId>crowd-integration-client-rest</artifactId>
             <version>2.7.2</version>
-            <exclusions>
-                <!-- Provided by Sonar -->
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- unit tests -->
         <dependency>
