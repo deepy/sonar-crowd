@@ -102,7 +102,7 @@
     <repositories>
         <repository>
             <id>atlassian</id>
-            <url>https://maven.atlassian.com/content/repositories/public</url>
+	    <url>https://packages.atlassian.com/maven-public</url>
         </repository>
     </repositories>
     
