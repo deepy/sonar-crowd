@@ -7,7 +7,7 @@
     <packaging>sonar-plugin</packaging>
     <name>Sonar Crowd Plugin</name>
     <description>Delegates authentication to Atlassian Crowd.</description>
-    <url>https://github.com/SonarQubeCommunity/sonar-crowd</url>
+    <url>https://github.com/deepy/sonar-crowd</url>
     <inceptionYear>2009</inceptionYear>
 
     <licenses>
@@ -29,6 +29,11 @@
             <name>Arnaud Héritier</name>
             <url>https://github.com/aheritier</url>
         </developer>
+        <developer>
+            <id>deepy</id>
+            <name>Alex Nordlund</name>
+            <url>https://github.com/deepy</url>
+        </developer>
     </developers>
 
     <contributors>
@@ -39,15 +44,15 @@
     </contributors>
 
     <scm>
-        <connection>scm:git:https://github.com/SonarQubeCommunity/sonar-crowd.git</connection>
-        <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-crowd.git</developerConnection>
-        <url>https://github.com/SonarQubeCommunity/sonar-crowd</url>
+        <connection>scm:git:https://github.com/deepy/sonar-crowd.git</connection>
+        <developerConnection>scm:git:git@github.com:deepy/sonar-crowd.git</developerConnection>
+        <url>https://github.com/deepy/sonar-crowd</url>
       <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/SonarQubeCommunity/sonar-crowd/issues</url>
+        <url>https://github.com/deepy/sonar-crowd/issues</url>
     </issueManagement>
 
     <properties>
