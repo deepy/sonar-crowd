@@ -36,7 +36,7 @@ public class CrowdConfiguration implements ServerExtension {
   /**
    * Creates new instance of CrowdConfiguration.
    *
-   * @param configuration configuration
+   * @param settings configuration
    */
   public CrowdConfiguration(Settings settings) {
     this.settings = settings;
@@ -59,7 +59,7 @@ public class CrowdConfiguration implements ServerExtension {
   }
 
   /**
-   * The name that the application will use when authenticating with the Crowd server.<br />
+   * The name that the application will use when authenticating with the Crowd server.<br>
    * Uses the settings key {@value #KEY_CROWD_APP_NAME}
    */
   public String getCrowdApplicationName() {
@@ -67,7 +67,7 @@ public class CrowdConfiguration implements ServerExtension {
   }
 
   /**
-   * The password that the application will use when authenticating with the Crowd server.<br />
+   * The password that the application will use when authenticating with the Crowd server.<br>
    * Uses the settings key {@value #KEY_CROWD_APP_PASSWORD}
    */
   public String getCrowdApplicationPassword() {
@@ -75,7 +75,7 @@ public class CrowdConfiguration implements ServerExtension {
   }
 
   /**
-   * The base URL of the crowd server, e.g. {@linkplain http://127.0.0.1:8095/crowd}.<br />
+   * The base URL of the crowd server, e.g. <a href="http://127.0.0.1:8095/crowd">http://127.0.0.1:8095/crowd</a>}.<br>
    * Uses the settings key {@value #KEY_CROWD_URL}
    */
   public String getCrowdUrl() {
