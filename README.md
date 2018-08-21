@@ -1,5 +1,5 @@
 # Crowd Plugin for SonarQube
-[![Build Status](https://api.travis-ci.org/SonarQubeCommunity/sonar-crowd.svg)](https://travis-ci.org/SonarQubeCommunity/sonar-crowd) [![Nemo Quality Gate status](https://nemo.sonarqube.org/api/badges/gate?key=org.codehaus.sonar-plugins%3Asonar-crowd-plugin)](https://nemo.sonarqube.org/overview?id=org.codehaus.sonar-plugins%3Asonar-crowd-plugin)
+[![Build Status](https://api.travis-ci.org/deepy/sonar-crowd.svg)](https://travis-ci.org/deepy/sonar-crowd)
 
 Download and Versions information: http://update.sonarsource.org/plugins/crowd-confluence.html
 
