@@ -19,30 +19,30 @@
  */
 package org.sonar.plugins.crowd;
 
-import org.junit.Test;
-import org.sonar.api.config.Settings;
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+
+import org.junit.Test;
+import org.sonar.api.config.internal.MapSettings;
 
 public class CrowdConfigurationTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void crowdUrlMissing() {
-    Settings settings = new Settings();
+    MapSettings settings = new MapSettings();
     new CrowdConfiguration(settings).getCrowdUrl();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void applicationPasswordMissing() {
-    Settings settings = new Settings();
+    MapSettings settings = new MapSettings();
     settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
     new CrowdConfiguration(settings).getCrowdApplicationPassword();
   }
 
   @Test
   public void usesFallbackForUnsetApplicationName() {
-    Settings settings = new Settings();
+    MapSettings settings = new MapSettings();
     settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
     settings.setProperty(CrowdConfiguration.KEY_CROWD_APP_PASSWORD, "secret");
     CrowdConfiguration crowdConfiguration = new CrowdConfiguration(settings);
@@ -51,7 +51,7 @@ public class CrowdConfigurationTest {
 
   @Test
   public void createsClientProperties() {
-    Settings settings = new Settings();
+    MapSettings settings = new MapSettings();
     settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
     settings.setProperty(CrowdConfiguration.KEY_CROWD_APP_NAME, "SonarQube");
     settings.setProperty(CrowdConfiguration.KEY_CROWD_APP_PASSWORD, "secret");

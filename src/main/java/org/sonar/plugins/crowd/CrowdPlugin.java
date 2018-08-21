@@ -19,25 +19,13 @@
  */
 package org.sonar.plugins.crowd;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableList.Builder;
-import org.sonar.api.Extension;
-import org.sonar.api.SonarPlugin;
-
-import java.util.List;
+import org.sonar.api.Plugin;
 
 /**
  * @author Evgeny Mandrikov
  */
-public class CrowdPlugin extends SonarPlugin {
-
-  @Override
-  public List<Class<? extends Extension>> getExtensions() {
-    Builder<Class<? extends Extension>> builder = ImmutableList.builder();
-
-    builder.add(CrowdRealm.class);
-    builder.add(CrowdConfiguration.class);
-
-    return builder.build();
+public class CrowdPlugin implements Plugin {
+  public void define(final Context context) {
+    context.addExtensions(CrowdRealm.class, CrowdConfiguration.class);
   }
 }
