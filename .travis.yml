@@ -2,15 +2,23 @@ language: java
 sudo: false
 install: true
 
+addons:
+  sonarcloud:
+    organization: "deepy-github"
+    token:
+      secure: "QiUm3MdCHf0S4eTJ2vuK+Pipfgm0elz+smn/pxt155Qr9w6Z4wKxEarD/TUMviRX9Wk0QL6a+3jfMUPebcZ6OKHaZGjjmJ9ZLujfTz0EIrRJn7ZE0gnzCenkKh3KUqjTBLBupZ5Ybneb9WKVgKKj3pt1yW4DpFhxAXU8MzYwxDM="
+
 jdk:
   - oraclejdk8
 
 script:
   - mvn verify -B -e -V
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
 cache:
   directories:
     - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
 
 notifications:
   email: false
