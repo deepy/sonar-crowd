@@ -19,13 +19,14 @@
  */
 package org.sonar.plugins.crowd;
 
-import org.sonar.api.ServerExtension;
 import org.sonar.api.config.Settings;
+import org.sonar.api.server.ServerSide;
 
 /**
  * @author Evgeny Mandrikov
  */
-public class CrowdConfiguration implements ServerExtension {
+@ServerSide
+public class CrowdConfiguration {
 
   static final String KEY_CROWD_URL = "crowd.url";
   static final String KEY_CROWD_APP_NAME = "crowd.application";
