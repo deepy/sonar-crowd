@@ -1,8 +1,6 @@
 # Crowd Plugin for SonarQube
 [![Build Status](https://api.travis-ci.org/deepy/sonar-crowd.svg)](https://travis-ci.org/deepy/sonar-crowd)
 
-Download and Versions information: http://update.sonarsource.org/plugins/crowd-confluence.html
-
 This plugin allows the delegation of SonarQube authentication and authorization to Atlassian Crowd. 
 The previous version of this plugin has been changed to provide the same functionality as the SonarQube LDAP plugin:
 
@@ -20,6 +18,10 @@ groups this user belongs to that are refreshed in the SonarQube database.
 # Requirements
 
 This plugin requires Atlassian Crowd 2.1.0 or later.
+
+# Installation
+
+Go to Administration > Marketplace > Search for "Crowd" > Install > Restart the SonarQube server
 
 # Usage
 
