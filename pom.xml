@@ -62,12 +62,12 @@
     </properties>
 
     <dependencies>
-    	<dependency>
-    		<groupId>org.sonarsource.sonarqube</groupId>
-    		<artifactId>sonar-plugin-api</artifactId>
-    		<version>${sonar.version}</version>
+        <dependency>
+            <groupId>org.sonarsource.sonarqube</groupId>
+            <artifactId>sonar-plugin-api</artifactId>
+            <version>${sonar.version}</version>
             <scope>provided</scope>
-		</dependency>
+        </dependency>
         <dependency>
             <groupId>com.atlassian.crowd</groupId>
             <artifactId>crowd-integration-client-rest</artifactId>
@@ -113,7 +113,7 @@
     <repositories>
         <repository>
             <id>atlassian</id>
-	    <url>https://packages.atlassian.com/maven-public</url>
+            <url>https://packages.atlassian.com/maven-public-legacy-local</url>
         </repository>
     </repositories>
     
