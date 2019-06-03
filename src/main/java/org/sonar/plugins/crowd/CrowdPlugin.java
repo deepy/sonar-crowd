@@ -26,6 +26,6 @@ import org.sonar.api.Plugin;
  */
 public class CrowdPlugin implements Plugin {
   public void define(final Context context) {
-    context.addExtensions(CrowdRealm.class, CrowdConfiguration.class);
+    context.addExtensions(CrowdRealm.class, CrowdConfiguration.class, CrowdSsoIdentityProvider.class);
   }
 }
