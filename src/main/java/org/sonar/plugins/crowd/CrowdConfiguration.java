@@ -19,7 +19,7 @@
  */
 package org.sonar.plugins.crowd;
 
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.server.ServerSide;
 
 /**
@@ -32,31 +32,15 @@ public class CrowdConfiguration {
   static final String KEY_CROWD_APP_NAME = "crowd.application";
   static final String KEY_CROWD_APP_PASSWORD = "crowd.password";
   static final String FALLBACK_NAME = "sonar";
-  private final Settings settings;
+  private final Configuration settings;
 
   /**
    * Creates new instance of CrowdConfiguration.
    *
    * @param settings configuration
    */
-  public CrowdConfiguration(Settings settings) {
+  public CrowdConfiguration(Configuration settings) {
     this.settings = settings;
-  }
-
-  private String get(String key, Settings settings, String fallback) {
-    String value = settings.getString(key);
-    if (value == null) {
-      return fallback;
-    }
-    return value;
-  }
-
-  private String getAndValidate(String key, Settings settings) {
-    String value = settings.getString(key);
-    if (value == null) {
-      throw new IllegalArgumentException(key + " is not set");
-    }
-    return value;
   }
 
   /**
@@ -64,7 +48,7 @@ public class CrowdConfiguration {
    * Uses the settings key {@value #KEY_CROWD_APP_NAME}
    */
   public String getCrowdApplicationName() {
-    return get(KEY_CROWD_APP_NAME, settings, FALLBACK_NAME);
+    return settings.get(KEY_CROWD_APP_NAME).orElse(FALLBACK_NAME);
   }
 
   /**
@@ -72,7 +56,9 @@ public class CrowdConfiguration {
    * Uses the settings key {@value #KEY_CROWD_APP_PASSWORD}
    */
   public String getCrowdApplicationPassword() {
-    return getAndValidate(KEY_CROWD_APP_PASSWORD, settings);
+    return settings
+            .get(KEY_CROWD_APP_PASSWORD)
+            .orElseThrow(() -> new IllegalArgumentException(KEY_CROWD_APP_PASSWORD + " is not set"));
   }
 
   /**
@@ -80,6 +66,8 @@ public class CrowdConfiguration {
    * Uses the settings key {@value #KEY_CROWD_URL}
    */
   public String getCrowdUrl() {
-    return getAndValidate(KEY_CROWD_URL, settings);
+    return settings
+            .get(KEY_CROWD_URL)
+            .orElseThrow(() -> new IllegalArgumentException(KEY_CROWD_URL + " is not set"));
   }
 }

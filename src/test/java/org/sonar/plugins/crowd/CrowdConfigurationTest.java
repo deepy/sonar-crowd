@@ -30,14 +30,14 @@ public class CrowdConfigurationTest {
   @Test(expected = IllegalArgumentException.class)
   public void crowdUrlMissing() {
     MapSettings settings = new MapSettings();
-    new CrowdConfiguration(settings).getCrowdUrl();
+    new CrowdConfiguration(settings.asConfig()).getCrowdUrl();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void applicationPasswordMissing() {
     MapSettings settings = new MapSettings();
     settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
-    new CrowdConfiguration(settings).getCrowdApplicationPassword();
+    new CrowdConfiguration(settings.asConfig()).getCrowdApplicationPassword();
   }
 
   @Test
@@ -45,7 +45,7 @@ public class CrowdConfigurationTest {
     MapSettings settings = new MapSettings();
     settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
     settings.setProperty(CrowdConfiguration.KEY_CROWD_APP_PASSWORD, "secret");
-    CrowdConfiguration crowdConfiguration = new CrowdConfiguration(settings);
+    CrowdConfiguration crowdConfiguration = new CrowdConfiguration(settings.asConfig());
     assertThat(crowdConfiguration.getCrowdApplicationName(), is(CrowdConfiguration.FALLBACK_NAME));
   }
 
@@ -55,7 +55,7 @@ public class CrowdConfigurationTest {
     settings.setProperty(CrowdConfiguration.KEY_CROWD_URL, "http://localhost:8095");
     settings.setProperty(CrowdConfiguration.KEY_CROWD_APP_NAME, "SonarQube");
     settings.setProperty(CrowdConfiguration.KEY_CROWD_APP_PASSWORD, "secret");
-    CrowdConfiguration crowdConfiguration = new CrowdConfiguration(settings);
+    CrowdConfiguration crowdConfiguration = new CrowdConfiguration(settings.asConfig());
 
     assertThat(crowdConfiguration.getCrowdUrl(), is("http://localhost:8095"));
     assertThat(crowdConfiguration.getCrowdApplicationName(), is("SonarQube"));
