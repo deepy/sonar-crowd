@@ -47,30 +47,39 @@ public class CrowdUsersProvider extends ExternalUsersProvider {
   @Override
   public UserDetails doGetUserDetails(String username) {
     LOG.debug("Looking up user details for user {}", username);
-
+    // Had to add that as from "not really a good idea" in
+    // https://stackoverflow.com/questions/51518781/jaxb-not-available-on-tomcat-9-and-java-9-10
+    ClassLoader threadClassLoader = Thread.currentThread().getContextClassLoader();
     try {
-      User user = crowdClient.getUser(username);
-      UserDetails details = new UserDetails();
-      if (user.getDisplayName() != null) {
-        details.setName(user.getDisplayName());
+      // This will enforce the crowClient to use the plugin classloader
+      Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+      try {
+        User user = crowdClient.getUser(username);
+        UserDetails details = new UserDetails();
+        if (user.getDisplayName() != null) {
+          details.setName(user.getDisplayName());
+        }
+        if (user.getEmailAddress() != null) {
+          details.setEmail(user.getEmailAddress());
+        }
+        return details;
+      } catch (UserNotFoundException e) {
+        return null; // API contract for ExternalUsersProvider
+      } catch (OperationFailedException e) {
+        throw new SonarException("Unable to retrieve user details for user" + username
+          + " from crowd.", e);
+      } catch (ApplicationPermissionException e) {
+        throw new SonarException(
+          "Unable to retrieve user details for user" + username
+            + " from crowd. The application is not permitted to perform the "
+            + "requested operation on the crowd server.", e);
+      } catch (InvalidAuthenticationException e) {
+        throw new SonarException("Unable to retrieve user details for user" + username
+          + " from crowd. The application name and password are incorrect.", e);
       }
-      if (user.getEmailAddress() != null) {
-        details.setEmail(user.getEmailAddress());
-      }
-      return details;
-    } catch (UserNotFoundException e) {
-      return null; // API contract for ExternalUsersProvider
-    } catch (OperationFailedException e) {
-      throw new SonarException("Unable to retrieve user details for user" + username
-        + " from crowd.", e);
-    } catch (ApplicationPermissionException e) {
-      throw new SonarException(
-        "Unable to retrieve user details for user" + username
-          + " from crowd. The application is not permitted to perform the "
-          + "requested operation on the crowd server.", e);
-    } catch (InvalidAuthenticationException e) {
-      throw new SonarException("Unable to retrieve user details for user" + username
-        + " from crowd. The application name and password are incorrect.", e);
+    } finally {
+      // Bring back the original class loader for the thread
+      Thread.currentThread().setContextClassLoader(threadClassLoader);
     }
   }
 

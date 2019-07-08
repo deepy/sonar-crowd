@@ -60,7 +60,17 @@ public class CrowdGroupsProvider extends ExternalGroupsProvider {
   private Collection<String> getGroupsForUser(String username, int start, int pageSize)
     throws UserNotFoundException, OperationFailedException, InvalidAuthenticationException,
     ApplicationPermissionException {
-    return transform(crowdClient.getGroupsForNestedUser(username, start, pageSize), GROUP_TO_STRING);
+    // Had to add that as from "not really a good idea" in
+    // https://stackoverflow.com/questions/51518781/jaxb-not-available-on-tomcat-9-and-java-9-10
+    ClassLoader threadClassLoader = Thread.currentThread().getContextClassLoader();
+    try {
+      // This will enforce the crowClient to use the plugin classloader
+      Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+      return transform(crowdClient.getGroupsForNestedUser(username, start, pageSize), GROUP_TO_STRING);
+    } finally {
+      // Bring back the original class loader for the thread
+      Thread.currentThread().setContextClassLoader(threadClassLoader);
+    }
   }
 
   private List<String> getGroupsForUser(String username)

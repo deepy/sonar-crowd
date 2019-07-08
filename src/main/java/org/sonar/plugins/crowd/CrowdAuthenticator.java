@@ -53,28 +53,38 @@ public class CrowdAuthenticator extends Authenticator {
 
 
   public boolean authenticate(String login, String password) {
+    // Had to add that as from "not really a good idea" in
+    // https://stackoverflow.com/questions/51518781/jaxb-not-available-on-tomcat-9-and-java-9-10
+    ClassLoader threadClassLoader = Thread.currentThread().getContextClassLoader();
     try {
-      client.authenticateUser(login, password);
-      return true;
-    } catch (UserNotFoundException e) {
-      LOG.debug("User {} not found", login);
-      return false;
-    } catch (InactiveAccountException e) {
-      LOG.debug("User {} is not active", login);
-      return false;
-    } catch (ExpiredCredentialException e) {
-      LOG.debug("Credentials of user {} have expired", login);
-      return false;
-    } catch (ApplicationPermissionException e) {
-      LOG.error("The application is not permitted to perform the requested operation"
-        + " on the crowd server", e);
-      return false;
-    } catch (InvalidAuthenticationException e) {
-      LOG.debug("Invalid credentials for user {}", login);
-      return false;
-    } catch (OperationFailedException e) {
-      LOG.error("Unable to authenticate user " + login, e);
-      return false;
+      // This will enforce the crowClient to use the plugin classloader
+      Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+      try {
+        client.authenticateUser(login, password);
+        return true;
+      } catch (UserNotFoundException e) {
+        LOG.debug("User {} not found", login);
+        return false;
+      } catch (InactiveAccountException e) {
+        LOG.debug("User {} is not active", login);
+        return false;
+      } catch (ExpiredCredentialException e) {
+        LOG.debug("Credentials of user {} have expired", login);
+        return false;
+      } catch (ApplicationPermissionException e) {
+        LOG.error("The application is not permitted to perform the requested operation"
+          + " on the crowd server", e);
+        return false;
+      } catch (InvalidAuthenticationException e) {
+        LOG.debug("Invalid credentials for user {}", login);
+        return false;
+      } catch (OperationFailedException e) {
+        LOG.error("Unable to authenticate user " + login, e);
+        return false;
+      }
+    } finally {
+      // Bring back the original class loader for the thread
+      Thread.currentThread().setContextClassLoader(threadClassLoader);
     }
   }
 }

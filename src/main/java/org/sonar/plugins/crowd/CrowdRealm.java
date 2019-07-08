@@ -93,16 +93,26 @@ public class CrowdRealm extends SecurityRealm {
     this.authenticator = new CrowdAuthenticator(crowdClient);
     this.usersProvider = new CrowdUsersProvider(crowdClient);
     this.groupsProvider = new CrowdGroupsProvider(crowdClient);
+    // Had to add that as from "not really a good idea" in
+    // https://stackoverflow.com/questions/51518781/jaxb-not-available-on-tomcat-9-and-java-9-10
+    ClassLoader threadClassLoader = Thread.currentThread().getContextClassLoader();
     try {
-      crowdClient.testConnection();
-      LOG.info("Crowd configuration is valid, connection test successful.");
-    } catch (OperationFailedException e) {
-      throw new SonarException("Unable to test connection to crowd", e);
-    } catch (InvalidAuthenticationException e) {
-      throw new SonarException("Application name and password are incorrect", e);
-    } catch (ApplicationPermissionException e) {
-      throw new SonarException("The application is not permitted to perform the requested "
-        + "operation on the crowd server", e);
+      // This will enforce the crowClient to use the plugin classloader
+      Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+      try {
+        crowdClient.testConnection();
+        LOG.info("Crowd configuration is valid, connection test successful.");
+      } catch (OperationFailedException e) {
+        throw new SonarException("Unable to test connection to crowd", e);
+      } catch (InvalidAuthenticationException e) {
+        throw new SonarException("Application name and password are incorrect", e);
+      } catch (ApplicationPermissionException e) {
+        throw new SonarException("The application is not permitted to perform the requested "
+            + "operation on the crowd server", e);
+      }
+    } finally {
+      // Bring back the original class loader for the thread
+      Thread.currentThread().setContextClassLoader(threadClassLoader);
     }
   }
 
