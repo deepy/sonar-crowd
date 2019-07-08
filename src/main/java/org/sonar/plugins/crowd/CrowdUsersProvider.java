@@ -47,6 +47,8 @@ public class CrowdUsersProvider extends ExternalUsersProvider {
   @Override
   public UserDetails doGetUserDetails(String username) {
     LOG.debug("Looking up user details for user {}", username);
+    // Had to add that as from "not really a good idea" in https://stackoverflow.com/questions/51518781/jaxb-not-available-on-tomcat-9-and-java-9-10
+    Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
 
     try {
       User user = crowdClient.getUser(username);

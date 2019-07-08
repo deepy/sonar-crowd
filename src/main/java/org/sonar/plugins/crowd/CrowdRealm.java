@@ -93,6 +93,8 @@ public class CrowdRealm extends SecurityRealm {
     this.authenticator = new CrowdAuthenticator(crowdClient);
     this.usersProvider = new CrowdUsersProvider(crowdClient);
     this.groupsProvider = new CrowdGroupsProvider(crowdClient);
+    // Had to add that as from "not really a good idea" in https://stackoverflow.com/questions/51518781/jaxb-not-available-on-tomcat-9-and-java-9-10
+    Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
     try {
       crowdClient.testConnection();
       LOG.info("Crowd configuration is valid, connection test successful.");
