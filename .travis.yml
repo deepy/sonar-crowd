@@ -9,7 +9,7 @@ addons:
       secure: "QiUm3MdCHf0S4eTJ2vuK+Pipfgm0elz+smn/pxt155Qr9w6Z4wKxEarD/TUMviRX9Wk0QL6a+3jfMUPebcZ6OKHaZGjjmJ9ZLujfTz0EIrRJn7ZE0gnzCenkKh3KUqjTBLBupZ5Ybneb9WKVgKKj3pt1yW4DpFhxAXU8MzYwxDM="
 
 jdk:
-  - oraclejdk8
+  - openjdk11
 
 script:
   - mvn verify -B -e -V
