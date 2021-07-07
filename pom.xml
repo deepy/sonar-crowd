@@ -57,7 +57,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.version>6.7</sonar.version>
+        <sonar.version>9.0.0.45539</sonar.version>
         <sonar.pluginName>Crowd</sonar.pluginName>
         <sonar.pluginClass>org.sonar.plugins.crowd.CrowdPlugin</sonar.pluginClass>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -130,6 +130,18 @@
             <artifactId>hamcrest-all</artifactId>
             <scope>test</scope>
             <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.sonarsource.sonarqube</groupId>
+            <artifactId>sonar-plugin-api-impl</artifactId>
+            <version>${sonar.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

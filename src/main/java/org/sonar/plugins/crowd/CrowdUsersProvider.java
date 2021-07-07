@@ -45,6 +45,11 @@ public class CrowdUsersProvider extends ExternalUsersProvider {
   }
 
   @Override
+  public UserDetails doGetUserDetails(final Context context)
+  {
+    return doGetUserDetails(context.getUsername());
+  }
+
   public UserDetails doGetUserDetails(String username) {
     LOG.debug("Looking up user details for user {}", username);
     // Had to add that as from "not really a good idea" in

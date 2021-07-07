@@ -39,6 +39,8 @@ import com.atlassian.crowd.service.client.CrowdClient;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 
+import javax.annotation.CheckForNull;
+
 /**
  * External groups provider implementation for Atlassian Crowd. 
  */
@@ -94,7 +96,12 @@ public class CrowdGroupsProvider extends ExternalGroupsProvider {
     return ImmutableList.copyOf(groups);
   }
 
-  @Override
+  // for sonar 9.0
+  public Collection<String> doGetGroups(final Context context)
+  {
+    return doGetGroups(context.getUsername());
+  }
+
   public Collection<String> doGetGroups(String username) {
     LOG.debug("Looking up user groups for user {}", username);
 
