@@ -96,7 +96,7 @@ public class CrowdGroupsProvider extends ExternalGroupsProvider {
     return ImmutableList.copyOf(groups);
   }
 
-  // for sonar 9.0
+  @Override
   public Collection<String> doGetGroups(final Context context)
   {
     return doGetGroups(context.getUsername());

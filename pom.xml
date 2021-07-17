@@ -57,7 +57,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.version>9.0.0.45539</sonar.version>
+        <sonar.version>8.9.0.43852</sonar.version>
         <sonar.pluginName>Crowd</sonar.pluginName>
         <sonar.pluginClass>org.sonar.plugins.crowd.CrowdPlugin</sonar.pluginClass>
         <maven.compiler.source>1.8</maven.compiler.source>
