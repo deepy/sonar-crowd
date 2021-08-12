@@ -1,5 +1,5 @@
 # Crowd Plugin for SonarQube
-[![Build Status](https://api.travis-ci.org/deepy/sonar-crowd.svg)](https://travis-ci.org/deepy/sonar-crowd)
+[![Build](https://github.com/deepy/sonar-crowd/actions/workflows/ci.yml/badge.svg)](https://github.com/deepy/sonar-crowd/actions/workflows/ci.yml)
 
 This plugin allows the delegation of SonarQube authentication and authorization to Atlassian Crowd. 
 The previous version of this plugin has been changed to provide the same functionality as the SonarQube LDAP plugin:
@@ -37,7 +37,7 @@ Go to Administration > Marketplace > Search for "Crowd" > Install > Restart the 
 # Configuration
 
 <table>
-<tr><th>Property</th><th>Description</th><th>Default value</th><th>Mandatory</th><th>Example</th></tr>
+<tr><th>Property</th><th>Description</th><th>Default value</th><th>Mandatory</th><th>Example</th>
 </tr>
 <tr><td>sonar.security.realm</td>
 <td>To first try to authenticate against the external sytem. If the external system is not reachable or if the user is not defined in the external system, the authentication will be performed through the SonarQube internal system.<br/>
